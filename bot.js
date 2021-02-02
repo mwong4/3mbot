@@ -1,7 +1,11 @@
 /*
-Example code from this source: https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/
+//Script Information//
+Author: Max Wong
+Date Created: Feb 1, 2020
+Purpose: To serve 3mber Discord server
 
-Adapted by Max Wong for 3mber
+//Sources//
+Initial settup and basic command recognition: https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/
 */
 
 var Discord = require('discord.io');
