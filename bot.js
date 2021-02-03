@@ -6,54 +6,74 @@ Purpose: To serve 3mber Discord server
 
 //Sources//
 Initial settup and basic command recognition: https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/
+Following Discord.JS API: https://discordjs.guide
+Database adapted from docs: https://discordjs.guide/sequelize/#lambda-listing-all-tags
 */
 
-var Discord = require('discord.io');
-var logger = require('winston');
-var auth = require('./auth.json');
-var promptChar = '>'; //This is the char used to prompt commands
+const Discord = require('discord.js');
+const Sequelize = require('sequelize');
 
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
-});
-logger.level = 'debug';
+const client = new Discord.Client();
+const PREFIX = '>';
 
-// Initialize Discord Bot
-var bot = new Discord.Client({
-   token: auth.token,
-   autorun: true
+// [alpha] Connection information
+const sequelize = new Sequelize('database', 'user', 'password', {
+	host: 'localhost',
+	dialect: 'sqlite',
+	logging: false,
+	//SQLite only
+	storahe: 'database.sqlite'
 });
-bot.on('ready', function (evt) {
-    logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
-});
-bot.on('message', function (user, userID, channelID, message, evt) {
-    // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with prompt given
-    if (message.substring(0, 1) == promptChar) {
-        var args = message.substring(1).split(' ');
-        var cmd = args[0];
-       
-        args = args.splice(1);
-        switch(cmd) {
-            // !ping
-            case 'ping':
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'Pong!'
-                });
-            break;
-            case 'intro':
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'Hello World! Welcome all'
-                });
-            break;
 
-            // Just add any case commands if you want to..
-         }
-     }
+// [beta] Creating the model
+/*
+ * equivalent to: CREATE TABLE tags(
+ * name VARCHAR(255),
+ * description TEXT,
+ * username VARCHAR(255),
+ * usage INT
+ * );
+*/
+const tags = sequelizee.define('tags', {
+	name: {
+		type: Sequelize.STRING,
+		unique: true,
+	},
+	description: Sequelize.TEXT,
+	username: Sequelize.STRING,
+	usage_count: {
+		type: Sequelize.INTEGER,
+		defaultValue: 0,
+		allowNull: false,
+	},
 });
+
+
+client.once('ready', () => {
+	// [gamma] Syncing the model
+	tags.sync({ force:true }); //{force:true} is for debugging
+});
+
+client.on('message', async message => {
+	if (message.content.startsWith(PREFIX)) {
+		const input = message.content.slice(PREFIX.length).trim().split(' ');
+		const command = input.shift();
+		const commandArgs = input.join(' ');
+
+		if (command === 'addtag') {
+			// [delta]
+		} else if (command === 'tag') {
+			// [epsilon]
+		} else if (command === 'edittag') {
+			// [zeta]
+		} else if (command === 'taginfo') {
+			// [theta]
+		} else if (command === 'showtags') {
+			// [lambda]
+		} else if (command === 'removetag') {
+			// [mu]
+		}
+	}
+});
+
+client.login("ODA1OTc2Mzg2MjMzNjk2MzE2.YBiuAA.SzTkEd__ApAAb-9USoIJgtDyriY");
