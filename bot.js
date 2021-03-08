@@ -60,7 +60,7 @@ client.on('message', async message => {
 		const command = input.shift();
 		const commandArgs = input.join(' ');
 
-		if (command === 'addtag') {
+		if (command === 'addtag') { //takes input name and descirption
 			// [delta] Adding a tag
 			const splitArgs = commandArgs.split(' ');
 			const tagName = splitArgs.shift();
@@ -70,7 +70,7 @@ client.on('message', async message => {
 				// equivalent to: INSET INTO tags (name, desciprion, username) values (?, ?, ?);
 				const tag = await Tags.create({
 					name: tagName,
-					description: tagDesciprtion,
+					description: tagDescription,
 					username: message.author.username,
 				});
 				return message.reply(`tag ${tag.name} added.`);
@@ -81,7 +81,7 @@ client.on('message', async message => {
 				}
 				return message.reply('Something went wrong with adding a tag.');
 			}
-		} else if (command === 'tag') {
+		} else if (command === 'tag') { //takes input name
 			// [epsilon] Fetching a tag
 			const tagName = commandArgs;
 
@@ -93,7 +93,7 @@ client.on('message', async message => {
 				return message.channel.send(tag.get('description'));
 			}
 			return message.reply(`Could not find tag: ${tagName}`);
-		} else if (command === 'edittag') {
+		} else if (command === 'edittag') { //takes input name and new description
 			// [zeta] Editing a tag
 			const splitArgs = commandArgs.split(' ');
 			const tagName = splitArgs.shift();
@@ -105,14 +105,14 @@ client.on('message', async message => {
 				return message.reply(`Tag ${tagName} was edited.`);
 			}
 			return message.reply(`Could not find a tag with name ${tagName}.`);
-		} else if (command === 'taginfo') {
+		} else if (command === 'taginfo') { //takes input name
 			// [theta] Dsplay info on a specific tag
 			const tagName = commandArgs;
 
 			//Equivalent to: SELECT * FROM tags WHERE name = 'tagName' LIMIT 1;
 			const tag = await Tags.findOne({ where: {name: tagName} });
 			if(tag) {
-				return message.channel.send(`${tageName} was created by ${tag.username} at ${tag.createdAt} and has been used ${tag.usage_count} times.`)
+				return message.channel.send(`${tagName} was created by ${tag.username} at ${tag.createdAt} and has been used ${tag.usage_count} times.`)
 			}
 			return message.reply(`Could not find tag: ${tagName}`);
 		} else if (command === 'showtags') {
@@ -129,6 +129,9 @@ client.on('message', async message => {
 			if (!rowCount) return message.reply('That tag did not exist.');
 
 			return message.reply('Tag deleted');
+		}
+		else if (command == 'ping') {
+			return message.reply('pong!');
 		}
 	}
 });
