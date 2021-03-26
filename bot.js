@@ -12,6 +12,7 @@ Database adapted from docs: https://discordjs.guide/sequelize/#lambda-listing-al
 
 const Discord = require('discord.js');
 const Sequelize = require('sequelize');
+const fs = require('fs');
 
 const client = new Discord.Client();
 const PREFIX = '>';
@@ -22,7 +23,7 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 	dialect: 'sqlite',
 	logging: false,
 	//SQLite only
-	storahe: 'database.sqlite'
+	storage: 'database.sqlite'
 });
 
 // [beta] Creating the model
@@ -52,6 +53,7 @@ const Tags = sequelize.define('tags', {
 client.once('ready', () => {
 	// [gamma] Syncing the model
 	Tags.sync({ force:true }); //{force:true} is for debugging
+	console.log("Bot Up and Running!");
 });
 
 client.on('message', async message => {
@@ -117,7 +119,7 @@ client.on('message', async message => {
 			return message.reply(`Could not find tag: ${tagName}`);
 		} else if (command === 'showtags') {
 			// [lambda] Listing all tags
-			//Equivalent to: SELECT name FROm tags;
+			//Equivalent to: SELECT name from tags;
 			const tagList = await Tags.findAll({attribute: ['name']});
 			const tagString = tagList.map(t => t.name).join(', ') || 'No tags set.';
 			return message.channel.send(`List of tags: ${tagString}`);
@@ -134,6 +136,13 @@ client.on('message', async message => {
 			return message.reply('pong!');
 		}
 	}
+	//Write to data file
+	let data = JSON.stringify(Tags);
+	fs.writeFile('Data.json', data, (err) => {
+		if (err) throw err;
+		console.log('Written Tags to Console');
+	});
+	
 });
 
 client.login("ODA1OTc2Mzg2MjMzNjk2MzE2.YBiuAA.SzTkEd__ApAAb-9USoIJgtDyriY");
