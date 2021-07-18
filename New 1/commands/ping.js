@@ -1,0 +1,19 @@
+/*
+Author: Iamwaxy
+Date Created: July 17, 2021
+Purpose: ping test command
+
+Follow Tutorials: CodeLyon
+*/
+
+//const Discord = require('discord.js');
+
+module.exports = 
+{
+    name: 'ping',
+    description: "ping test command",
+    execute(message, args)
+    {
+        message.channel.send('pong'); //Send 'ping' in channel
+    },
+};

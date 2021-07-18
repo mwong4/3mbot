@@ -6,10 +6,21 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 */
 
+const fs = require('fs'); //Allow to acces other js files
 const Discord = require('discord.js');
-const client = new Discord.Client();
-
 const prefix = '>';
+
+const client = new Discord.Client();
+client.commands = new Discord.Collection(); //collection of commands
+
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); //Give directory, filter .js only
+for(const file of commandFiles) //Loop through commands
+{
+    const command = require(`./commands/${file}`); //Save commands from file to main
+
+    client.commands.set(command.name, command);
+}
+
 
 //Run at start
 client.once('ready', () => {
@@ -25,7 +36,9 @@ client.on('message', message => {
 
     if(command === 'ping')
     {
-        message.channel.send('pong');
+        //message.channel.send('test2'); //Send 'ping' in channel
+        //message.channel.send('test1'); //Send 'ping' in channel
+        client.commands.get('ping').execute(message, args);
     }
 });
 
