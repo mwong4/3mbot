@@ -9,7 +9,6 @@ Follow Tutorials: CodeLyon
 const fs = require('fs'); //Allow to acces other js files
 const Discord = require('discord.js');
 require('dotenv').config(); //Requiring .env file
-const prefix = process.env.PREFIX;
 
 const client = new Discord.Client();
 
