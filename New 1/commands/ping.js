@@ -6,8 +6,6 @@ Purpose: ping test command
 Follow Tutorials: CodeLyon
 */
 
-//const Discord = require('discord.js');
-
 module.exports = 
 {
     name: 'ping',

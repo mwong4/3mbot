@@ -12,35 +12,14 @@ require('dotenv').config(); //Requiring .env file
 const prefix = process.env.PREFIX;
 
 const client = new Discord.Client();
-client.commands = new Discord.Collection(); //collection of commands
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); //Give directory, filter .js only
-for(const file of commandFiles) //Loop through commands
-{
-    const command = require(`./commands/${file}`); //Save commands from file to main
+client.commands = new Discord.Collection(); //command and event collections
+client.events = new Discord.Collection();
 
-    client.commands.set(command.name, command);
-}
+//Execute command and event handlers
+['command_handler', 'event_handler'].forEach(handler => {
+    require(`./handlers/${handler}`)(client, Discord);
+})
 
-
-//Run at start
-client.once('ready', () => {
-    console.log('3mbot is online'); //Indicate start in console
-});
-
-//Basic Command System
-client.on('message', message => {
-    if(!message.content.startsWith(prefix) || message.author.bot) return; //Ignore commands without prefix or made by bot
-
-    const args = message.content.slice(prefix.length).split(/ +/); //Splicing
-    const command = args.shift().toLowerCase();
-
-    if(command === 'ping')
-    {
-        //message.channel.send('test2'); //Send 'ping' in channel
-        //message.channel.send('test1'); //Send 'ping' in channel
-        client.commands.get('ping').execute(message, args);
-    }
-});
 
 client.login(process.env.DISCORD_TOKEN); //Login token
