@@ -8,7 +8,8 @@ Follow Tutorials: CodeLyon
 
 const fs = require('fs'); //Allow to acces other js files
 const Discord = require('discord.js');
-const prefix = '>';
+require('dotenv').config(); //Requiring .env file
+const prefix = process.env.PREFIX;
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection(); //collection of commands
@@ -42,4 +43,4 @@ client.on('message', message => {
     }
 });
 
-client.login('ODA1OTc2Mzg2MjMzNjk2MzE2.YBiuAA.SzTkEd__ApAAb-9USoIJgtDyriY'); //Login token
+client.login(process.env.DISCORD_TOKEN); //Login token
