@@ -1,3 +1,0 @@
-ID: 805976386233696316
-
-https://discordapp.com/oauth2/authorize?&client_id=805976386233696316&scope=bot&permissions=8

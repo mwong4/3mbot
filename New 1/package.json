@@ -4,6 +4,7 @@
   "description": "Discord bot for 3mber server",
   "main": "main.js",
   "scripts": {
+    "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Iamwaxy",

@@ -13,7 +13,7 @@ module.exports = (client, Discord) => {
 
     for(const file of commandFiles) //Loop through commands
     {
-        const command = require(`./commands/${file}`); //Save commands from file to main
+        const command = require(`../commands/${file}`); //Save commands from file to main
         if(command.name) //if there is a name which exists, execute?
         {
             client.commands.set(command.name, command);
