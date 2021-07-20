@@ -21,7 +21,7 @@ module.exports =
         }
         else
         {
-            message.channel.send('ERROR: Mod Permissions Required.'); //Send 'ping' in channel
+            message.channel.send('ERROR: Mod Permissions Required'); //Send 'ping' in channel
             //message.member.roles.add('866306383658221628').catch(console.error); //add, remove
         }
         
