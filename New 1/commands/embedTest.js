@@ -6,8 +6,6 @@ Purpose: Learning to do embeds
 Follow Tutorials: CodeLyon
 */
 
-//const Discord = require('discord.js');
-
 module.exports = {
     name: 'embedtest',
     description: "Learning embeds",
