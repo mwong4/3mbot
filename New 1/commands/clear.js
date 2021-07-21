@@ -32,7 +32,7 @@ module.exports = {
         }
         else
         {
-            message.channel.send('ERROR: Mod Permissions Required to mass clear'); //Send 'ping' in channel
+            message.channel.send('ERROR: Mod Permissions Required to mass clear'); //Send permission error
         }
     }
 }

@@ -20,7 +20,7 @@ module.exports = {
             {
                 const memberTarget = message.guild.members.cache.get(member.id); //get id
                 memberTarget.ban();
-                message.channel.send("User has been banned");
+                message.channel.send(`<@${memberTarget.user.id}> has been banned`);
             }
             else
             {
@@ -29,7 +29,7 @@ module.exports = {
         }
         else
         {
-            message.channel.send('ERROR: Mod Permissions Required to ban'); //Send 'ping' in channel
+            message.channel.send('ERROR: Mod Permissions Required to ban'); //Send permission error
         }
     }
 }

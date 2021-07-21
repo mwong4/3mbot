@@ -20,7 +20,7 @@ module.exports = {
             {
                 const memberTarget = message.guild.members.cache.get(member.id); //get id
                 memberTarget.kick();
-                message.channel.send("User has been kicked");
+                message.channel.send(`<@${memberTarget.user.id}> has been kicked`);
             }
             else
             {
@@ -29,7 +29,7 @@ module.exports = {
         }
         else
         {
-            message.channel.send('ERROR: Mod Permissions Required to kick'); //Send 'ping' in channel
+            message.channel.send('ERROR: Mod Permissions Required to kick'); //Send permission error
         }
     }
 }
