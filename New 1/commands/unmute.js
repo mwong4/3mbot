@@ -8,6 +8,7 @@ Follow Tutorials: CodeLyon
 
 module.exports = {
     name: 'unmute',
+    aliases: ['umt'],
     description: "For unmuting members",
     execute(client, message, args)
     {

@@ -10,6 +10,7 @@ const ms = require('ms'); //incldue ms package
 
 module.exports = {
     name: 'mute',
+    aliases: ['mt'],
     description: "For muting members",
     execute(client, message, args)
     {

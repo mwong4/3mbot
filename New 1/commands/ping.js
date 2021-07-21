@@ -8,7 +8,8 @@ Follow Tutorials: CodeLyon
 
 module.exports = 
 {
-    name: 'ping',
+    name: 'pingtest',
+    aliases: ['ping', 'test'],
     description: "ping test command",
     execute(client, message, args)
     {

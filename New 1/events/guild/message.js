@@ -41,7 +41,7 @@ module.exports = async(Discord, client, message) => {
     const args = message.content.slice(prefix.length).split(/ +/); //Splicing command
     const cmd = args.shift().toLowerCase();
 
-    const command = client.commands.get(cmd);
+    const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd)); //find command or alias
 
     if(command) command.execute(client, message, args, Discord);
 }

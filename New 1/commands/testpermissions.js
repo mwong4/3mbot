@@ -8,7 +8,8 @@ Follow Tutorials: CodeLyon
 
 module.exports = 
 {
-    name: 'test',
+    name: 'testpermissions',
+    aliases: ['testperms', 'permstest'],
     description: "test permissions",
     execute(client, message, args)
     {
