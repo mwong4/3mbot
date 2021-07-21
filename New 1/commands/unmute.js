@@ -9,6 +9,7 @@ Follow Tutorials: CodeLyon
 module.exports = {
     name: 'unmute',
     aliases: ['umt'],
+    permissions: ["MANAGE_ROLES", "MUTE_MEMBERS"],
     description: "For unmuting members",
     execute(client, message, args)
     {

@@ -8,6 +8,7 @@ Follow Tutorials: CodeLyon
 
 module.exports = {
     name: 'ban',
+    permissions: ["BAN_MEMBERS"],
     description: "For banning member",
     execute(client, message, args)
     {

@@ -8,6 +8,7 @@ Follow Tutorials: CodeLyon
 
 module.exports = {
     name: 'kick',
+    permissions: ["KICK_MEMBERS"],
     description: "For kicking member",
     execute(client, message, args)
     {

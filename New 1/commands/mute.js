@@ -11,6 +11,7 @@ const ms = require('ms'); //incldue ms package
 module.exports = {
     name: 'mute',
     aliases: ['mt'],
+    permissions: ["MANAGE_ROLES", "MUTE_MEMBERS"],
     description: "For muting members",
     execute(client, message, args)
     {

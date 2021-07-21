@@ -10,6 +10,7 @@ NODE: only works for less than 14 days old messages
 module.exports = {
     name: 'clear',
     aliases: ['wipe', 'clean', 'cl'],
+    permissions: ["MANAGE_MESSAGES"],
     description: "For clearing messages",
     async execute(client, message, args)
     {
