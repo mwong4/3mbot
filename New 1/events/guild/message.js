@@ -14,6 +14,7 @@ module.exports = async(Discord, client, message) => {
 
     if(!message.content.startsWith(prefix) || message.author.bot) return; //filter out non prefix or bot messages
 
+    /*
     let profileData; //stores result of profile search
     try
     {
@@ -35,6 +36,7 @@ module.exports = async(Discord, client, message) => {
     {
         console.log(err);
     }
+    */
 
     const args = message.content.slice(prefix.length).split(/ +/); //Splicing command
     const cmd = args.shift().toLowerCase();
