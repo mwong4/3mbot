@@ -17,6 +17,14 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection(); //command and event collections
 client.events = new Discord.Collection();
 
+//Guild member add event
+client.on('guildMemberAdd', guildMember =>{
+    let welcomeRole = guildMember.guild.roles.cache.find(role => role.name === 'Member');
+
+    guildMember.roles.add(welcomeRole); //Add member role
+    guildMember.guild.channels.cache.get('867453936021012540').send(`Welcome <@${guildMember.user.id}>`);
+});
+
 //Execute command and event handlers
 ['command_handler', 'event_handler'].forEach(handler => {
     require(`./handlers/${handler}`)(client, Discord);
