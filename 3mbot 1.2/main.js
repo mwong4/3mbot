@@ -30,7 +30,7 @@ client.on('guildMemberAdd', guildMember =>{
     require(`./handlers/${handler}`)(client, Discord);
 });
 
-/*
+
 //Connect to database through mongoose package
 mongoose.connect(process.env.MONGODB_SRV, {
     useNewUrlParser: true,
@@ -41,7 +41,6 @@ mongoose.connect(process.env.MONGODB_SRV, {
 }).catch((err) => {
     console.log(err); //let us know error
 });
-*/
 
 
 client.login(process.env.DISCORD_TOKEN); //Login token
