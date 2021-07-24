@@ -4,6 +4,12 @@ Date Created: July 17, 2021
 Purpose: Main file of 3mbot
 
 Follow Tutorials: CodeLyon
+
+TODO
+-Daily Rewards/daily beg
+-Admin daily reward reset
+-Help command
+-Give coins command
 */
 
 const fs = require('fs'); //Allow to acces other js files

@@ -16,5 +16,4 @@ module.exports =
     {
         message.channel.send(`Your wallet balance: ${profileData.coins}, your bank balance: ${profileData.bank}`);
     }
-
 };
