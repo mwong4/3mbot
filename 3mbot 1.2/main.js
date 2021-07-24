@@ -6,9 +6,7 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Help command
 -Bank interest
-
 -Daily Rewards/daily beg
 -Admin daily reward reset
 -Items
