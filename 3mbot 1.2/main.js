@@ -7,12 +7,12 @@ Follow Tutorials: CodeLyon
 
 TODO
 -admin balance check
-
--Daily Rewards/daily beg
--Admin daily reward reset
 -Help command
 -Give coins command (trade)
 -Bank interest
+
+-Daily Rewards/daily beg
+-Admin daily reward reset
 */
 
 const fs = require('fs'); //Allow to acces other js files
