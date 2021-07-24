@@ -26,6 +26,6 @@ module.exports = {
             .setImage('attachment://kerdTheBird.png')
             .setFooter("It's Kerd the Bird");
 
-        message.channel.send(newEmbed); //Send Image
+        message.channel.send(newEmbed); //Send Embed
     }
 };

@@ -2,8 +2,6 @@
 Author: Iamwaxy
 Date Created: July 24, 2021
 Purpose: For admins to checking wallet and bank balance
-
-Follow Tutorials: CodeLyon
 */
 
 const profileModel = require('../models/profileSchema');

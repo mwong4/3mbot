@@ -2,8 +2,6 @@
 Author: Iamwaxy
 Date Created: July 23, 2021
 Purpose: As admin, taking coins
-
-Follow Tutorials: CodeLyon
 */
 
 const profileModel = require('../models/profileSchema');
