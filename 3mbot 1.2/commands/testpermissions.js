@@ -10,6 +10,7 @@ module.exports =
 {
     name: 'testpermissions',
     aliases: ['testperms', 'permstest'],
+    permissions: [],
     description: "test permissions",
     execute(client, message, args)
     {

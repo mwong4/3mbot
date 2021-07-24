@@ -9,6 +9,7 @@ Follow Tutorials: CodeLyon
 module.exports = {
     name: 'embedtest',
     aliases: ['embtest', 'testemb'],
+    permissions: [],
     description: "Learning embeds",
     execute(client, message, args, Discord) 
     {

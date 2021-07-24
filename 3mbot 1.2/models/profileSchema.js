@@ -19,4 +19,4 @@ const profileSchema = new mongoose.Schema({
 //Actual data (model)
 const model = mongoose.model('ProfileModels', profileSchema);
 
-module.exports = module;
+module.exports = model;

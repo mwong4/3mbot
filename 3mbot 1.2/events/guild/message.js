@@ -14,7 +14,7 @@ module.exports = async(Discord, client, message) => {
 
     if(!message.content.startsWith(prefix) || message.author.bot) return; //filter out non prefix or bot messages
 
-    /*
+    
     let profileData; //stores result of profile search
     try
     {
@@ -22,7 +22,6 @@ module.exports = async(Discord, client, message) => {
 
         if(!profileData) //if profile does not exist
         {
-            console.log("Hi");
             let profile = await profileModel.create({ //make profile
                 userID: message.author.id,
                 serverID: message.guild.id,
@@ -36,7 +35,8 @@ module.exports = async(Discord, client, message) => {
     {
         console.log(err);
     }
-    */
+    
+    
 
     const args = message.content.slice(prefix.length).split(/ +/); //Splicing command
     const cmd = args.shift().toLowerCase();
@@ -80,6 +80,7 @@ module.exports = async(Discord, client, message) => {
       
     if(command.permissions.length) //If there is a perm inputted
     {
+        console.log("There is a permission");
         let invalidPerms = []
         for(const perm of command.permissions)
         {
@@ -101,5 +102,5 @@ module.exports = async(Discord, client, message) => {
 
     //Cooldown here
 
-    if(command) command.execute(client, message, args, Discord);
+    if(command) command.execute(client, message, args, Discord, profileData);
 }

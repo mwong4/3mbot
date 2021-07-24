@@ -10,6 +10,7 @@ module.exports =
 {
     name: 'pingtest',
     aliases: ['ping', 'test'],
+    permissions: [],
     description: "ping test command",
     execute(client, message, args)
     {
