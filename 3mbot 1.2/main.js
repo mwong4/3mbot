@@ -6,10 +6,13 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
+-admin balance check
+
 -Daily Rewards/daily beg
 -Admin daily reward reset
 -Help command
--Give coins command
+-Give coins command (trade)
+-Bank interest
 */
 
 const fs = require('fs'); //Allow to acces other js files
