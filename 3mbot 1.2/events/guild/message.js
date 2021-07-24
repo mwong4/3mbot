@@ -80,7 +80,6 @@ module.exports = async(Discord, client, message) => {
       
     if(command.permissions.length) //If there is a perm inputted
     {
-        console.log("There is a permission");
         let invalidPerms = []
         for(const perm of command.permissions)
         {
