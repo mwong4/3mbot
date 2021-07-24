@@ -10,7 +10,7 @@ module.exports = {
     name: 'unmute',
     aliases: ['umt'],
     permissions: ["MANAGE_ROLES", "MUTE_MEMBERS"],
-    description: "For unmuting members",
+    description: "For unmuting members. Syntax: >unmute @User",
     execute(client, message, args)
     {
         const target = message.mentions.users.first(); //get FIRST member mentioned

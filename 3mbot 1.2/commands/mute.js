@@ -12,7 +12,7 @@ module.exports = {
     name: 'mute',
     aliases: ['mt'],
     permissions: ["MANAGE_ROLES", "MUTE_MEMBERS"],
-    description: "For muting members",
+    description: "For muting members. Syntax: >mute @User",
     execute(client, message, args)
     {
         const target = message.mentions.users.first(); //get FIRST member mentioned

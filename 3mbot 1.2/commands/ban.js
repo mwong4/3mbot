@@ -9,7 +9,7 @@ Follow Tutorials: CodeLyon
 module.exports = {
     name: 'ban',
     permissions: ["BAN_MEMBERS"],
-    description: "For banning member",
+    description: "For banning member. Syntax: >ban @User",
     execute(client, message, args)
     {
         const member = message.mentions.users.first();

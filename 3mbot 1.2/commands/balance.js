@@ -11,7 +11,7 @@ module.exports =
     name: 'balance',
     aliases: ['bal', 'bl'],
     permissions: [],
-    description: "To check balance",
+    description: "To check your own balance. Syntax: >balance",
     execute(client, message, args, Discord, profileData)
     {
         const newEmbed = new Discord.MessageEmbed() //make embed

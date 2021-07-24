@@ -11,7 +11,7 @@ module.exports =
     name: 'check',
     aliases: [],
     permissions: ["ADMINISTRATOR"],
-    description: "For admins to check balance",
+    description: "For admins to check balance. Syntax: >check @User",
     async execute(client, message, args, Discord, profileData)
     {
         if(!args.length) return message.channel.send('ERROR: Missing mention player'); //Make sure person is mentioned

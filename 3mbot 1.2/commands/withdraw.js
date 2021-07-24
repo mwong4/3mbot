@@ -13,7 +13,7 @@ module.exports =
     name: 'withdraw',
     aliases: ['draw', 'wd'],
     permissions: [],
-    description: "To take money out of bank",
+    description: "To take money out of your bank account. Syntax: >withdraw #quantity",
 
     async execute(client, message, args, discord, profileData)
     {

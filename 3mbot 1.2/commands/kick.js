@@ -9,7 +9,7 @@ Follow Tutorials: CodeLyon
 module.exports = {
     name: 'kick',
     permissions: ["KICK_MEMBERS"],
-    description: "For kicking member",
+    description: "For kicking member. Syntax: >kick @User",
     execute(client, message, args)
     {
         const member = message.mentions.users.first(); //get FIRST member mentioned

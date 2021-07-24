@@ -10,7 +10,7 @@ module.exports = {
     name: 'embedtest',
     aliases: ['embtest', 'testemb'],
     permissions: [],
-    description: "Learning embeds",
+    description: "Just a test to learn embeds. Syntax: >embedtest",
     execute(client, message, args, Discord) 
     {
         const newEmbed = new Discord.MessageEmbed()

@@ -11,7 +11,7 @@ module.exports =
     name: 'take',
     aliases: [],
     permissions: ["ADMINISTRATOR"],
-    description: "As admin, ability to take coins. Command: >take #quantity @user  location(ie bank, wallet)",
+    description: "As admin, ability to take coins from members. Syntax: >take #quantity @user  location(ie bank, wallet)",
 
     async execute(client, message, args, discord, profileData)
     {

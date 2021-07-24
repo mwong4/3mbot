@@ -13,7 +13,7 @@ module.exports =
     name: 'deposit',
     aliases: ['dep', 'depo'],
     permissions: [],
-    description: "To drop money into bank",
+    description: "To drop money into your bank account. Syntax: >deposit #quantity",
 
     async execute(client, message, args, discord, profileData)
     {

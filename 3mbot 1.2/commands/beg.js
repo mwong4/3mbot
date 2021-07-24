@@ -13,7 +13,7 @@ module.exports =
     name: 'beg',
     aliases: [],
     permissions: [],
-    description: "To beg for coins",
+    description: "To beg for coins. Syntax: >beg",
     async execute(client, message, args, discord, profileData)
     {
         const randomNumber = Math.floor(Math.random() * 500) + 1; //generate random amount between 1 and 500

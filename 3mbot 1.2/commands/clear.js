@@ -11,7 +11,7 @@ module.exports = {
     name: 'clear',
     aliases: ['wipe', 'clean', 'cl'],
     permissions: ["MANAGE_MESSAGES"],
-    description: "For clearing messages",
+    description: "For clearing messages. Syntax: >clear #quantity",
     async execute(client, message, args)
     {
         let role = message.guild.roles.cache.find(r => r.name === "Mod");

@@ -11,7 +11,7 @@ module.exports =
     name: 'pingtest',
     aliases: ['ping', 'test'],
     permissions: [],
-    description: "ping test command",
+    description: "Ping test command. Syntax: >ping",
     execute(client, message, args)
     {
         message.channel.send('pong'); //Send 'ping' in channel

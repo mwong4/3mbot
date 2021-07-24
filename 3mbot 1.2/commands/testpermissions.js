@@ -11,7 +11,7 @@ module.exports =
     name: 'testpermissions',
     aliases: ['testperms', 'permstest'],
     permissions: [],
-    description: "test permissions",
+    description: "for test permission code. Syntax: >testpermissions",
     execute(client, message, args)
     {
         let role = message.guild.roles.cache.find(r => r.name === "Mod");
