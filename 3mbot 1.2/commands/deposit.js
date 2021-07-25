@@ -17,6 +17,11 @@ module.exports =
 
     async execute(client, message, args, discord, profileData)
     {
+        if(!profileData)
+        {
+            return message.channel.send("ERROR: Account not found");
+        }
+
         const amount = args[0];
         if(amount % 1 != 0 || amount <= 0) return message.channel.send('ERROR: Deposit amount must be a positive whole number'); //make sure input is not negative and is whole first
         

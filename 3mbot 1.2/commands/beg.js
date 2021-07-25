@@ -16,6 +16,11 @@ module.exports =
     description: "To beg for coins. Syntax: >beg",
     async execute(client, message, args, discord, profileData)
     {
+        if(!profileData)
+        {
+            return message.channel.send("ERROR: Account not found");
+        }
+
         const randomNumber = Math.floor(Math.random() * 500) + 1; //generate random amount between 1 and 500
         const response = await profileModel.findOneAndUpdate(
         {

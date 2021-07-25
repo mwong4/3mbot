@@ -14,6 +14,11 @@ module.exports =
     description: "To check your own balance. Syntax: >balance",
     execute(client, message, args, Discord, profileData)
     {
+        if(!profileData)
+        {
+            return message.channel.send("ERROR: Account not found");
+        }
+
         const newEmbed = new Discord.MessageEmbed() //make embed
             .setTitle(`${message.author.username}'s Account`)
             .setColor('#2AD500')
