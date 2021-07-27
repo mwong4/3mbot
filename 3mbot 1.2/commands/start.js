@@ -2,8 +2,6 @@
 Author: Iamwaxy
 Date Created: July 25, 2021
 Purpose: To Start Account
-
-Follow Tutorials: CodeLyon
 */
 
 const profileModel = require('../models/profileSchema'); //get schema+model
@@ -23,6 +21,8 @@ module.exports =
                 let profile = await profileModel.create({ //make profile
                     userID: message.author.id,
                     serverID: message.guild.id,
+                    streak: 0,
+                    daily: true,
                     coins: 1000,
                     bank: 0
                 });

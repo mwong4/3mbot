@@ -6,8 +6,7 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Start Command
--Daily Rewards/daily beg
+-Daily Rewards Daily Reset 
 -Admin daily reward reset
 
 -Bank Interest
@@ -17,6 +16,7 @@ TODO
 */
 
 const fs = require('fs'); //Allow to acces other js files
+const cron = require('cron'); //Import date/time reader package
 const Discord = require('discord.js');
 require('dotenv').config(); //Requiring .env file
 
@@ -51,6 +51,31 @@ mongoose.connect(process.env.MONGODB_SRV, {
 }).catch((err) => {
     console.log(err); //let us know error
 });
+
+/*
+const list = client.guilds.cache.get('712292045326385194');
+
+if(!list)
+{
+    console.log('nothing in list');
+}
+
+console.log(list.memberCount);
+
+//Run daily reward checker
+function dailyReward()
+{
+    //
+    console.log("Reset all daily's");
+
+    //go through whole list of members
+    //if daily == false, reset to true and add to streak
+    //if daily == true, reset streak
+}
+
+let dailyTimer = new cron.CronJob('00 7 21 * * 0-6', dailyReward); //set up timer
+dailyTimer.start();
+*/
 
 
 client.login(process.env.DISCORD_TOKEN); //Login token

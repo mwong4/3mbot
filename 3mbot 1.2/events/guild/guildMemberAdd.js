@@ -14,6 +14,8 @@ module.exports = async(client, discord, member) =>{
     let profile = await profileModel.create({ //make profile
         userID: member.id,
         serverID: member.guild.id,
+        streak: 0,
+        daily: true,
         coins: 1000,
         bank: 0
     });
