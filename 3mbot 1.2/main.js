@@ -7,7 +7,6 @@ Follow Tutorials: CodeLyon
 
 TODO
 -Daily Rewards Daily Reset 
--Admin daily reward reset
 
 -Bank Interest
 -Bank Upgrade
