@@ -1,7 +1,7 @@
 /*
 Author: Iamwaxy
 Date Created: July 27, 2021
-Purpose: For resetting daily rewards
+Purpose: For resetting daily rewards in the local server
 */
 
 const profileModel = require('../models/profileSchema'); //get schema+model
@@ -20,15 +20,14 @@ module.exports =
         const list = client.guilds.cache.get(process.env.SERVER_ID);
         const filteredList = []; //List of all non bot members
 
-        list.members.cache.forEach(member => {
+        list.members.cache.forEach(member => { //get all members and save into an array
             if(!member.user.bot)
             {
-                console.log(member.user.id);
                 filteredList.push(member.user.id);
             }
         });
 
-        for(const person in filteredList)
+        for(const person in filteredList) //Go through array
         {
             const targetData = await profileModel.findOne({userID: filteredList[person]}); //find target in database
 
