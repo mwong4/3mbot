@@ -53,15 +53,6 @@ mongoose.connect(process.env.MONGODB_SRV, {
 });
 
 /*
-const list = client.guilds.cache.get('712292045326385194');
-
-if(!list)
-{
-    console.log('nothing in list');
-}
-
-console.log(list.memberCount);
-
 //Run daily reward checker
 function dailyReward()
 {
