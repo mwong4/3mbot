@@ -9,15 +9,15 @@ require('dotenv').config(); //Requiring .env file
 
 module.exports =
 {
-    name: 'updateDaily',
-    aliases: ['updatedaily', 'resetdaily', 'resetDaily'],
+    name: 'updatedaily',
+    aliases: ['resetdaily'],
     permissions: ["ADMINISTRATOR"],
     description: "To manualy reset daily rewards. Syntax: >updateDaily",
 
     async execute(client, message, args, discord, profileData)
     {
 
-        const list = client.guilds.cache.get(process.env.SERVER_ID);
+        const list = client.guilds.cache.get(message.guild.id);
         const filteredList = []; //List of all non bot members
 
         list.members.cache.forEach(member => { //get all members and save into an array
