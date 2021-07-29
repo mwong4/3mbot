@@ -18,7 +18,25 @@ module.exports =
     {
         if(message.author.id == process.env.IAMWAXY_ID) //Check if user is Iamwaxy
         {
-            //reset all
+            //reset all with daily still true
+            await profileModel.updateMany(
+            {
+                daily: true,
+            }, 
+            {
+                $set: {streak: 0},
+            }
+            );
+
+            //reset all with daily as false
+            await profileModel.updateMany(
+            {
+                daily: false,
+            }, 
+            {
+                $set: {daily: true},
+            }
+            );
 
             return message.channel.send("Reset has completed successfully");
         }
