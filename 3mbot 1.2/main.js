@@ -15,7 +15,6 @@ TODO
 */
 
 const fs = require('fs'); //Allow to acces other js files
-const cron = require('cron'); //Import date/time reader package
 const Discord = require('discord.js');
 require('dotenv').config(); //Requiring .env file
 
@@ -50,22 +49,5 @@ mongoose.connect(process.env.MONGODB_SRV, {
 }).catch((err) => {
     console.log(err); //let us know error
 });
-
-/*
-//Run daily reward checker
-function dailyReward()
-{
-    //
-    console.log("Reset all daily's");
-
-    //go through whole list of members
-    //if daily == false, reset to true and add to streak
-    //if daily == true, reset streak
-}
-
-let dailyTimer = new cron.CronJob('00 7 21 * * 0-6', dailyReward); //set up timer
-dailyTimer.start();
-*/
-
 
 client.login(process.env.DISCORD_TOKEN); //Login token
