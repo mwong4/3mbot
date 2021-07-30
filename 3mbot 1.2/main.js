@@ -6,8 +6,6 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Daily Rewards Daily Reset 
-
 -Bank Interest
 -Bank Upgrade
 -Items
