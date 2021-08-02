@@ -5,6 +5,7 @@ Purpose: Give reward to booster
 */
 
 require('dotenv').config(); //Requiring .env file
+const profileModel = require('../models/profileSchema');
 
 module.exports = 
 {
