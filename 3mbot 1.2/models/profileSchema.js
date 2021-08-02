@@ -13,9 +13,10 @@ const profileSchema = new mongoose.Schema({
     userID: {type: String, require: true, unique: true},
     serverID: {type: String, require: true},
     streak: {type: Number, default: 0},
-    daily: {type: Boolean},
+    daily: {type: Boolean}, //true when available
     coins: {type: Number, default: 1000},
-    bank: {type: Number}
+    bank: {type: Number},
+    boostReward: {type: Boolean, default: false} // true when used (one time)
 })
 
 //Actual data (model)
