@@ -6,11 +6,11 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Making Items
 -Editing Items
+-See all items command
+
 -See Inventory Command
 -See Item Command
--See all items command
 
 -Items w/ Image Support
 

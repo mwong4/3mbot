@@ -24,14 +24,6 @@ module.exports = async(client, discord, member) =>{
     profile.save(); //Save profile to database  
 
     /*
-    let item = await itemModel.create({ //make profile
-        name: "test",
-        description: "just a test",
-        numberSold: 0,
-        averageValue: 0,
-        tradeable: true,
-        tier: "common"
-    });
-    item.save(); //Save profile to database 
+
     */ 
 };

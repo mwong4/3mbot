@@ -14,6 +14,6 @@ module.exports =
     description: "Ping test command. Syntax: >ping",
     execute(client, message, args)
     {
-        message.channel.send('pong'); //Send 'ping' in channel
+        message.channel.send(args.splice(0, args.length).join(" ")); //Send 'ping' in channel
     },
 };
