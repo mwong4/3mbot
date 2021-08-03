@@ -11,9 +11,14 @@ module.exports =
     name: 'inspectAll',
     aliases: ["inspectall", "seeall"],
     permissions: ["ADMINISTRATOR"],
-    description: "To see all valid items. Syntax: >inspectAll",
+    description: "To see all valid items. Syntax: >inspectAll type (item, crate)",
     async execute(client, message, args, Discord, profileData)
     {
+        const type = args[0];
+        const result = [];
 
+        itemModel.find({objType: type}).toArray(result);
+
+        console.log(result);
     },
 };

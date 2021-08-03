@@ -11,10 +11,10 @@ module.exports =
     name: 'addItem',
     aliases: ["additem", "add"],
     permissions: ["ADMINISTRATOR"],
-    description: "To add a valid item. Syntax: >addItem name  averageValue  tradeable (true, false)  tier (ie common, rare, etc)  description",
+    description: "To add a valid item. Syntax: >addItem name (1 word)  averageValue  tradeable (true, false)  tier (ie common, rare, etc)  objectType  description",
     async execute(client, message, args, Discord, profileData)
     {
-        if(args.length < 4) return message.channel.send("ERROR: Missing arguments"); //Make sure enough arguments provided
+        if(args.length < 5) return message.channel.send("ERROR: Missing arguments"); //Make sure enough arguments provided
 
         const averageValue = args[1];
 
@@ -23,7 +23,7 @@ module.exports =
         else if(args[2] === "false") tradeable = false;
         else return message.channel.send("ERROR: [tradeable] is not a boolean (ie, true, false)");
 
-        const description = args.splice(4, args.length).join(" "); //get all strings after (including) 4 and join into 1
+        const description = args.splice(5, args.length).join(" "); //get all strings after (including) 4 and join into 1
 
         if(averageValue % 1 != 0 || averageValue < 0) return message.channel.send('ERROR: Average Value must be a positive whole number'); //make sure input is not negative and is whole first
 
@@ -39,7 +39,8 @@ module.exports =
                     numberSold: 0,
                     averageValue: averageValue,
                     tradeable: tradeable,
-                    tier: args[3]
+                    tier: args[3],
+                    objType: args[4]
                 });
                 item.save(); //Save profile to database 
                 return message.channel.send(`${args[0]} created`);

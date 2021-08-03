@@ -13,7 +13,8 @@ const itemSchema = new mongoose.Schema({
     numberSold: {type: Number, default: 0},
     averageValue: {type: Number, default: 0},
     tradeable: {type: Boolean},
-    tier: {type: String}
+    tier: {type: String},
+    objType: {type: String}
     //image: - coming later
 })
 
