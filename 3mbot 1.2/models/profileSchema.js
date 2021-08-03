@@ -16,7 +16,8 @@ const profileSchema = new mongoose.Schema({
     daily: {type: Boolean}, //true when available
     coins: {type: Number, default: 1000},
     bank: {type: Number},
-    boostReward: {type: Boolean, default: false} // true when used (one time)
+    boostReward: {type: Boolean, default: false}, // true when used (one time)
+    inventory: {type: [String]}
 })
 
 //Actual data (model)

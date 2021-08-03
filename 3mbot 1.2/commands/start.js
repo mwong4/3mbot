@@ -25,7 +25,8 @@ module.exports =
                     daily: true,
                     coins: 1000,
                     bank: 0,
-                    boostReward: false
+                    boostReward: false,
+                    inventory: []
                 });
                 profile.save(); //Save profile to database
                 return message.channel.send(`Account for <@${message.author.username}> created`);
