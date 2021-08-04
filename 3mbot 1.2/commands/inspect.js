@@ -1,0 +1,47 @@
+/*
+Author: Iamwaxy
+Date Created: Aug 4, 2021
+Purpose: To see all items owned by a user
+*/
+
+const profileModel = require('../models/profileSchema'); //get models
+const itemModel = require('../models/itemSchema');
+
+module.exports = 
+{
+    name: 'inspect',
+    aliases: ["ins"],
+    permissions: [],
+    description: "Inpsect an item more closely. Syntax: >inpsect itemName",
+    async execute(client, message, args, Discord, profileData)
+    {
+        const input = args[0];
+        try
+        {
+            var targetData = await itemModel.findOne({name: input}); //find target in database
+            if(!targetData) return message.channel.send(`${input} is not a valid item`);
+
+            const newEmbed = new Discord.MessageEmbed() //make embed
+            .setTitle(`${input} [${targetData.tier}] (${targetData.objType})`)
+            .setColor('#42bff5')
+
+            if(profileData || message.member.hasPermission("ADMINISTRATOR"))
+            {
+                if(message.member.hasPermission("ADMINISTRATOR") || profileData.inventory.includes(input)) //If user is admin or has item in inventory, show full detail
+                {
+                    newEmbed.addField("description", targetData.description, true);
+                    newEmbed.addField("sold", targetData.numberSold, true);
+                    newEmbed.addField("average value", targetData.averageValue, true);
+                }
+            }
+
+            newEmbed.addField("tradeable", targetData.tradeable, true);
+
+            message.channel.send(newEmbed); //Send embed
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    },
+};
