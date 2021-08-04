@@ -6,11 +6,10 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Editing Items
--See all items command
-
--See Inventory Command
 -See Item Command
+
+-Update Boost (With 6 hr cd's)
+-See all items command
 
 -Items w/ Image Support
 
