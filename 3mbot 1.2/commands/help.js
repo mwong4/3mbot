@@ -11,7 +11,7 @@ module.exports =
     name: 'help',
     aliases: [],
     permissions: [],
-    description: "Shows all commands and their descriptions. Syntax: >help",
+    description: "Shows all commands and their descriptions. Syntax: >help. For admin commands, use Syntax: >help admin",
 
     execute(client, message, args, Discord, profileData)
     {
@@ -44,8 +44,16 @@ module.exports =
                 continue;
             }
         }
-        message.channel.send(normalEmbed);
-        return message.channel.send(adminEmbed); //Send Embeds
+
+        if(args[0] === "admin") //If admin commands are requested
+        {
+            message.channel.send(adminEmbed); 
+        }
+        else
+        {
+            message.channel.send(normalEmbed); //Send normal Embed
+        }
+        return;
     }
 
 };
