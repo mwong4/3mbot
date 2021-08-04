@@ -4,7 +4,8 @@ Date Created: Aug 3, 2021
 Purpose: To be able to edit the details of an item
 */
 
-const itemModel = require('../models/itemSchema'); //get model
+const itemModel = require('../models/itemSchema'); //get models
+const profileModel = require('../models/profileSchema');
 
 module.exports = 
 {
@@ -28,6 +29,17 @@ module.exports =
             {
                 if(operation === "name")
                 {
+                    /*
+                    await profileModel.updateMany(
+                    {
+                        inventory: {$elemMatch : objName}},
+                    }, 
+                    {
+                        $set: {name: input},
+                    }
+                    );
+                    */
+
                     const response = await itemModel.findOneAndUpdate( //Set name
                     {
                         name: objName,
