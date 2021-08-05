@@ -29,16 +29,19 @@ module.exports =
             {
                 if(operation === "name")
                 {
-                    /*
+                    
                     await profileModel.updateMany(
                     {
-                        inventory: {$elemMatch : objName}},
+                        
                     }, 
                     {
-                        $set: {name: input},
+                        $set: { "inventory.$[element]" : input},
+                    },
+                    {
+                        arrayFilters: [ { element: objName}]
                     }
                     );
-                    */
+                    
 
                     const response = await itemModel.findOneAndUpdate( //Set name
                     {
