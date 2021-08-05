@@ -6,13 +6,14 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Fix bug
-
--See all items command
 -Update Boost (With 6 hr cd's)
 -Update all with new item system
 
 -Items w/ Image Support
+-Lootboxes
+-Buying items
+-Selling items
+-Auction
 
 -Bank Interest
 -Bank Upgrade
