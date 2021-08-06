@@ -17,6 +17,7 @@ const profileSchema = new mongoose.Schema({
     coins: {type: Number, default: 1000},
     bank: {type: Number},
     boostReward: {type: Boolean, default: false}, // true when used (one time)
+    boosterTime: {type: Number, default: 0}, //time before next boost reward
     inventory: {type: [String]}
 })
 
