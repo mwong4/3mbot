@@ -23,7 +23,14 @@ module.exports =
 
             if(message.member.roles.cache.has(process.env.BOOSTER_TAG_ID) || message.guild.roles.cache.find(role => role.name === 'Server Booster')) //Checks to see if booster has boost tag
             {
-                if(!targetData.boostReward)
+                var todayDate = new Date();
+                var futureDate = new Date();
+                futureDate.setHours(todayDate.getHours() + 6); //using ust time
+
+                console.log(targetData.boosterTime.getTime());
+                console.log(todayDate.getTime());
+
+                if(targetData.boosterTime.getTime() < todayDate.getTime())
                 {
                     const response = await profileModel.findOneAndUpdate(
                         {
@@ -36,15 +43,15 @@ module.exports =
                             },
                             $set: 
                             {
-                                boostReward: true,
+                                boosterTime: futureDate,
                             },
                         }
                         );
-                    return message.channel.send(`Thank you ${message.author.username} for boosting! You have recieved _____ as a gift!`);   
+                    return message.channel.send(`Thank you ${message.author.username} for boosting! You have recieved _____ as a gift! Come back in 6 hours`);   
                 }
                 else
                 {
-                    return message.channel.send("Sorry, reward has already been collected. Reward us 1 time");
+                    return message.channel.send(`Sorry, reward has already been collected. come back at ${targetData.boosterTime}`);
                 }
             }
             else

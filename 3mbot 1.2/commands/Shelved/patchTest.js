@@ -16,16 +16,25 @@ module.exports =
     {
         try
         {
-            await profileModel.updateMany(
+            await profileModel.updateMany( //add date as field
             {
             
             },
             {
-
                 $set: {boosterTime: 0},
                 multi: true,
             },
             );
+
+            await profileModel.updateMany( //remove field (field must be in schema)
+            {
+            
+            },
+            {
+                $unset: { boostReward: "" },
+            },
+            );
+
             return message.channel.send("Patch Installed");
         }
         catch(err)

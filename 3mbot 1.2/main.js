@@ -6,7 +6,6 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Update Boost (With 6 hr cd's)
 -Items w/ Image Support
 
 -Lootboxes
