@@ -31,7 +31,7 @@ module.exports =
                 {
                     newEmbed.addField("description", targetData.description, true);
                     newEmbed.addField("sold", targetData.numberSold, true);
-                    newEmbed.addField("average value", targetData.averageValue, true);
+                    newEmbed.addField("historical average value", targetData.averageValue, true);
                 }
             }
 

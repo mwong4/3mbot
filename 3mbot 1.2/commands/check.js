@@ -4,7 +4,8 @@ Date Created: July 24, 2021
 Purpose: For admins to checking wallet and bank balance
 */
 
-const profileModel = require('../models/profileSchema');
+const profileModel = require('../models/profileSchema'); //get models
+const itemModel = require('../models/itemSchema');
 
 module.exports = 
 {
@@ -26,11 +27,21 @@ module.exports =
 
             const newEmbed = new Discord.MessageEmbed() //make embed
             .setTitle(`${target.username}'s Account`)
-            .setColor('#2AD500')
+            .setColor('#cc0a00')
             .addFields(
                 {name: 'Wallet', value: targetData.coins},
                 {name: 'Bank', value: targetData.bank}
             );
+
+            for(const item of targetData.inventory) //Loop through all commands
+            {
+                var itemData = await itemModel.findOne({name: item}); //find target in database
+    
+                if(targetData) //If target exists
+                {
+                    newEmbed.addField(item, `[${itemData.tier}] (${itemData.objType})`, false); //add item and tier to embed
+                }
+            }
 
             return message.channel.send(newEmbed); //Send embed
         }

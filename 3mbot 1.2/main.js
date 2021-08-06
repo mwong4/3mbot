@@ -7,9 +7,8 @@ Follow Tutorials: CodeLyon
 
 TODO
 -Update Boost (With 6 hr cd's)
--Update all with new item system
-
 -Items w/ Image Support
+
 -Lootboxes
 -Buying items
 -Selling items
@@ -18,6 +17,10 @@ TODO
 -Bank Interest
 -Bank Upgrade
 -Trading
+
+-Implement ACTUAL item value
+-Implement spreadsheet export
+-Implement improved purchased product data tracking
 */
 
 const fs = require('fs'); //Allow to acces other js files
