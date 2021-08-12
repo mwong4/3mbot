@@ -14,7 +14,10 @@ const itemSchema = new mongoose.Schema({
     averageValue: {type: Number, default: 0},
     tradeable: {type: Boolean},
     tier: {type: String},
-    objType: {type: String}
+    objType: {type: String},
+    photoID: {type: String},
+    purchasable: {type: Boolean},
+    rates: {type: String}
     //image: - coming later
 })
 

@@ -12,7 +12,7 @@ module.exports =
     name: 'edit',
     aliases: ["edititem"],
     permissions: ["ADMINISTRATOR"],
-    description: "To edit an item. Syntax: >edit itemName  operation (name, description, numbersold, averagevalue, tradeable, tier, objtype)  value (value for selected operation)",
+    description: "To edit an item. Syntax: >edit itemName  operation (name, description, numbersold, averagevalue, tradeable, tier, objtype, photoid, purchasable, rates)  value (value for selected operation)",
     async execute(client, message, args, Discord, profileData)
     {
         if(args.length < 3) return message.channel.send("ERROR: Missing arguments"); //Make sure enough arguments provided
@@ -146,9 +146,58 @@ module.exports =
                     }
                     );
                 }
+                else if(operation === "photoid")
+                {
+                    const response = await itemModel.findOneAndUpdate( //Set name
+                    {
+                        name: objName,
+                    }, 
+                    {
+                        $set: {
+                            photoID: input,
+                        },
+                    }
+                    );
+                }
+                else if(operation === "purchasable")
+                {
+                    //check bool
+                    var convertedInput = false;
+
+                    if(input === "true") convertedInput = true;
+                    else if(input === "false") convertedInput = false;
+                    else return message.channel.send("ERROR: [tradeable] is not a boolean (ie, true, false)");
+
+                    const response = await itemModel.findOneAndUpdate( //Set name
+                    {
+                        name: objName,
+                    }, 
+                    {
+                        $set: {
+                            purchasable: convertedInput,
+                        },
+                    }
+                    );
+                }
+                else if(operation === "rates")
+                {
+                    //check positive whole number
+                    if(input % 1 != 0 || input < 0) return message.channel.send('ERROR: Amount must be a positive whole number');
+
+                    const response = await itemModel.findOneAndUpdate( //Set name
+                    {
+                        name: objName,
+                    }, 
+                    {
+                        $set: {
+                            rates: input,
+                        },
+                    }
+                    );
+                }
                 else
                 {
-                    return message.channel.send(`${operation} is not a valid operator. (ie. name, description, numbersold, averagevalue, tradeable, tier, objtype)`)
+                    return message.channel.send(`${operation} is not a valid operator. (ie. name, description, numbersold, averagevalue, tradeable, tier, objtype, photoid, purchasable, rates)`)
                 }
                 return message.channel.send(`${operation} on ${objName} has been updated`); //Send success message
             }

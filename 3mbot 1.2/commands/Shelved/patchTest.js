@@ -5,6 +5,7 @@ Purpose: To test adding field to database
 */
 
 const profileModel = require('../models/profileSchema'); //Get model
+const itemModel = require('../models/itemSchema');
 
 module.exports = 
 {
@@ -16,16 +17,17 @@ module.exports =
     {
         try
         {
-            await profileModel.updateMany( //add date as field
+            await itemModel.updateMany( //add date as field
             {
             
             },
             {
-                $set: {boosterTime: 0},
+                $set: {rates: "Test"},
                 multi: true,
             },
             );
 
+            /*
             await profileModel.updateMany( //remove field (field must be in schema)
             {
             
@@ -34,6 +36,7 @@ module.exports =
                 $unset: { boostReward: "" },
             },
             );
+            */
 
             return message.channel.send("Patch Installed");
         }

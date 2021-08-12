@@ -51,7 +51,7 @@ module.exports =
                 }
                 else
                 {
-                    return message.channel.send(`Sorry, reward has already been collected. come back at ${targetData.boosterTime}`);
+                    return message.channel.send(`Sorry, reward has already been collected. Come back at ${targetData.boosterTime}`);
                 }
             }
             else

@@ -6,10 +6,10 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Items w/ Image Support
+-Use command
 
--Lootboxes
 -Buying items
+-Items w/ Image Support
 -Selling items
 -Auction
 
@@ -20,7 +20,7 @@ TODO
 -Implement ACTUAL item value
 -Implement spreadsheet export
 -Implement improved purchased product data tracking
-*/
+*/ 
 
 const fs = require('fs'); //Allow to acces other js files
 const Discord = require('discord.js');
