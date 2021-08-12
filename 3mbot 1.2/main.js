@@ -6,11 +6,12 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Use command
+-Test Use Command
 
 -Buying items
--Items w/ Image Support
 -Selling items
+
+-Items w/ Image Support
 -Auction
 
 -Bank Interest

@@ -29,7 +29,7 @@ module.exports =
                 const targetData = await profileModel.findOne({userID: target.id}); //find target in database
                 if(!targetData) return message.channel.send(`ERROR: User does not exist in database`); //make sure user is in database
 
-                if(targetData.inventory.includes(amount))
+                if(targetData.inventory.includes(amount)) //Replace first match in array with null value
                 {
                     const responseOne = await profileModel.findOneAndUpdate(
                     {
@@ -40,16 +40,16 @@ module.exports =
                         $set: { "inventory.$" : null},
                     }
                     );
-                    const responseTwo = await profileModel.findOneAndUpdate(
-                        {
-                            userID: target.id,
-                        }, 
-                        {
-                            $pull: {
-                                inventory: null,
-                            },
-                        }
-                        );
+                    const responseTwo = await profileModel.findOneAndUpdate( //Remove any null figures in inventory
+                    {
+                        userID: target.id,
+                    }, 
+                    {
+                        $pull: {
+                            inventory: null,
+                        },
+                    }
+                    );
                 }
                 return message.channel.send(`${amount} has been removed from ${target.username}`)
             }

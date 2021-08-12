@@ -19,7 +19,7 @@ module.exports =
         try
         {
             var targetData = await itemModel.findOne({name: input}); //find target in database
-            if(!targetData) return message.channel.send(`${input} is not a valid item`);
+            if(!targetData) return message.channel.send(`${input} is not a valid object`);
 
             const newEmbed = new Discord.MessageEmbed() //make embed
             .setTitle(`${input} [${targetData.tier}] (${targetData.objType})`)
