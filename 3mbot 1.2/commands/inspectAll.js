@@ -11,7 +11,7 @@ module.exports =
     name: 'inspectAll',
     aliases: ["inspectall", "seeall"],
     permissions: ["ADMINISTRATOR"],
-    description: "To see all valid items. Syntax: >inspectAll type (item, crate, write nothing for whole list)",
+    description: "To see all valid items. Syntax: >inspectAll objectType (item, crate, write nothing for whole list)",
     async execute(client, message, args, Discord, profileData)
     {
         var type = args[0];

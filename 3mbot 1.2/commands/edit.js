@@ -12,7 +12,7 @@ module.exports =
     name: 'edit',
     aliases: ["edititem"],
     permissions: ["ADMINISTRATOR"],
-    description: "To edit an item. Syntax: >edit itemName  operation (name, description, numbersold, averagevalue, tradeable, tier, objtype, photoid, purchasable, rates)  value (value for selected operation)",
+    description: "To edit an item. Syntax: >edit objectName  operation (name, description, numbersold, averagevalue, tradeable, tier, objtype, photoid, purchasable, rates)  value (value for selected operation)",
     async execute(client, message, args, Discord, profileData)
     {
         if(args.length < 3) return message.channel.send("ERROR: Missing arguments"); //Make sure enough arguments provided

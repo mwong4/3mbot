@@ -8,10 +8,10 @@ const itemModel = require('../models/itemSchema'); //get model
 
 module.exports = 
 {
-    name: 'addItem',
-    aliases: ["additem", "add"],
+    name: 'addObject',
+    aliases: ["add", "addobj", "addobject"],
     permissions: ["ADMINISTRATOR"],
-    description: "To add a valid item. Syntax: >addItem name(1 word)  averageValue  tradeable(true, false)  tier(ie common, rare, etc)  objectType  photoID  purchasable(true, false)  rates(Cost Common Unique Rare Legendary)  description",
+    description: "To add a valid item. Syntax: >addObject name(1 word)  averageValue  tradeable(true, false)  tier(ie common, rare, etc)  objectType  photoID  purchasable(true, false)  rates(Cost Common Unique Rare Legendary)  description",
     async execute(client, message, args, Discord, profileData)
     {
         if(args.length < 5) return message.channel.send("ERROR: Missing arguments"); //Make sure enough arguments provided

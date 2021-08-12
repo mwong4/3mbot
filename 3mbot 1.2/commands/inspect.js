@@ -12,7 +12,7 @@ module.exports =
     name: 'inspect',
     aliases: ["ins"],
     permissions: [],
-    description: "Inpsect an item more closely. Syntax: >inpsect itemName",
+    description: "Inpsect an item more closely. Syntax: >inpsect objectName",
     async execute(client, message, args, Discord, profileData)
     {
         const input = args[0];

@@ -14,7 +14,7 @@ module.exports =
     name: 'give',
     aliases: [],
     permissions: ["ADMINISTRATOR"],
-    description: "As admin, ability to give coins. Syntax: >give #quantity/itemName @user",
+    description: "As admin, ability to give coins or objects. Syntax: >give  #quantity/objectName  @user",
 
     async execute(client, message, args, discord, profileData)
     {
