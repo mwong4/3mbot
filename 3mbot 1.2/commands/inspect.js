@@ -34,25 +34,26 @@ module.exports =
                     newEmbed.addField("historical average value", targetData.averageValue, true);
                 }
             }
+            newEmbed.addField("tradeable", targetData.tradeable, true); 
 
 
-            if(targetdata.objType  === "item")
+            if(targetData.objType  === "item")
             {
                 newEmbed.setColor("#42bff5"); //Set to blue
             }
-            else if(targetdata.objType === "crate")
+            else if(targetData.objType === "crate")
             {
                 const splitRates = targetData.rates.split(" ");
 
                 newEmbed.setColor("#e56bfa"); //Set to purple
                 newEmbed.addField("price", splitRates[0], true);
-                newEmbed.addField("rates (Common, Unique, Rare, Legendary)", splitRates.slice(1).join(" "), true);
+                newEmbed.addField("rates(%)(Common, Unique, Rare, Legendary)", splitRates.slice(1).join(" "), true);
             }
             else
             {
                 return message.channel.send("ERROR: Objtype not recognized");
             }
-            newEmbed.addField("tradeable", targetData.tradeable, true); 
+            
             message.channel.send(newEmbed); //Send embed
         }
         catch(err)

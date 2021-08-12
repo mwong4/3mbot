@@ -11,18 +11,31 @@ module.exports =
     name: 'inspectAll',
     aliases: ["inspectall", "seeall"],
     permissions: ["ADMINISTRATOR"],
-    description: "To see all valid items. Syntax: >inspectAll type (item, crate)",
+    description: "To see all valid items. Syntax: >inspectAll type (item, crate, write nothing for whole list)",
     async execute(client, message, args, Discord, profileData)
     {
-        const type = args[0];
+        var type = args[0];
 
         try
         {
-            const data = await itemModel.find({objType: type});
+            var data = await itemModel.find({}); //By default, get all
+            if(args[0]) //If argument specified, research query
+            {
+                data = await itemModel.find({objType: type});
+            }
+            else
+            {
+                type = "object";
+            }
             
             const newEmbed = new Discord.MessageEmbed() //make embed
-            .setTitle("All Valid Items")
+            .setTitle(`Valid ${type} list`)
             .setColor('#42bff5')
+
+            if(args[0] === "crate") //If crate chosen, change color to purple
+            {
+                newEmbed.setColor('#e56bfa')
+            }
 
             for(const obj of data)
             {
