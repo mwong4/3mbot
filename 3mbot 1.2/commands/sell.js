@@ -2,10 +2,47 @@
 Author: Iamwaxy
 Date Created: Aug 13, 2021
 Purpose: To purchase items
+
+Used tutorial for confirmation: https://www.codegrepper.com/code-examples/javascript/discord.js+await+message
 */
 
 const profileModel = require('../models/profileSchema'); //get models
 const itemModel = require('../models/itemSchema');
+
+//Function for updating purchase in DB
+async function updateProfile(_message, _price, _objectName)
+{
+    //Give coins
+    const responseOne = await profileModel.findOneAndUpdate(
+    {
+        userID: _message.author.id,
+    }, 
+    {
+        $inc: {coins: _price,},
+    }
+    );
+
+    //Remove item
+    const responseTwo = await profileModel.findOneAndUpdate(
+    {
+        userID: _message.author.id,
+        inventory: _objectName,
+    }, 
+    {
+        $set: { "inventory.$" : null},
+    }
+    );
+    const responseThree = await profileModel.findOneAndUpdate( //Remove any null figures in inventory
+    {
+        userID: _message.author.id,
+    }, 
+    {
+        $pull: {
+            inventory: null,
+        },
+    }
+    );
+}
 
 module.exports = 
 {
@@ -32,28 +69,37 @@ module.exports =
 
                 if(profileData.inventory.includes(objectName))
                 {
-                    const responseOne = await itemModel.findOneAndUpdate( //Increase number sold
-                    {
-                        name: objectName,
-                    }, 
-                    {
-                        $inc: {
-                            numberSold: 1,},
-                    }
-                    );
+                    const price = targetData.averageValue * 0.5;
 
-                    //Remove coins and add new item
-                    const responseTwo = await profileModel.findOneAndUpdate(
-                    {
-                        userID: message.author.id,
-                    }, 
-                    {
-                        $inc: {coins: -1*Number(splitRates[0]),},
-                        $push: { inventory: objectName, },
-                    }
-                    );
-                    
-                    return message.channel.send(`Purchase of a ${objectName} complete. Thank you, come again soon!`);
+                    //Get confirmation
+                    let filter = m => m.author.id === message.author.id
+                    message.channel.send(`[LEVEL: 1] You will sell to the bot for ${price} coins. Please reply with <YES> to confirm. This message will expire in 30 seconds`).then(() => {
+                      message.channel.awaitMessages(filter, {
+                          max: 1,
+                          time: 30000,
+                          errors: ['time']
+                        })
+                        .then(message => {
+                            message = message.first()
+                            if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') 
+                            {
+                                updateProfile(message, price, objectName); //Call function to update DB
+
+                                return message.channel.send(`Sold ${objectName} for ${price} coins`);
+                            } 
+                            else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
+                            {
+                                return message.channel.send(`Terminated`)
+                            } 
+                            else 
+                            {
+                                return message.channel.send(`Terminated: Invalid Response`)
+                            }
+                        })
+                        .catch(collected => {
+                            message.channel.send('ERROR: Timeout');
+                        });
+                    })
                 }
                 else
                 {

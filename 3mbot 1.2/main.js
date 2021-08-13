@@ -6,14 +6,12 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Selling items
+-Auction
+-Trading
 
 -Items w/ Image Support
--Auction
-
 -Bank Interest
 -Bank Upgrade
--Trading
 
 -Implement ACTUAL item value
 -Implement spreadsheet export
