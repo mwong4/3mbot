@@ -28,6 +28,8 @@ module.exports =
 
         try
         {
+            if(!profileData) return message.channel.send("ERROR: No account found in database");
+
             var targetData = await itemModel.findOne({name: objectName}); //find target in database
             if(!targetData) return message.channel.send(`${objectName} is not a valid object`);
 

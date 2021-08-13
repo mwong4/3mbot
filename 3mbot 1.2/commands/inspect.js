@@ -46,7 +46,7 @@ module.exports =
                 const splitRates = targetData.rates.split(" ");
 
                 newEmbed.setColor("#e56bfa"); //Set to purple
-                newEmbed.addField("price", splitRates[0], true);
+                newEmbed.addField("price from bot", splitRates[0], true);
                 newEmbed.addField("rates(%)(Common, Unique, Rare, Legendary)", splitRates.slice(1).join(" "), true);
             }
             else

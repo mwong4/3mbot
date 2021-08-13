@@ -6,7 +6,6 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Buying items
 -Selling items
 
 -Items w/ Image Support
