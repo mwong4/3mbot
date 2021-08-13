@@ -6,8 +6,6 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Test Use Command
-
 -Buying items
 -Selling items
 

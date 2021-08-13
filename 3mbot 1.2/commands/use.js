@@ -1,11 +1,16 @@
 /*
 Author: Iamwaxy
-Date Created: Aug 4, 2021
-Purpose: To see all items owned by a user
+Date Created: Aug 11, 2021
+Purpose: To be able to use an item
 */
 
 const profileModel = require('../models/profileSchema'); //get models
 const itemModel = require('../models/itemSchema');
+
+function getRandomInt(max)
+{
+    return Math.floor(Math.random() * max);
+}
 
 module.exports = 
 {
@@ -24,7 +29,7 @@ module.exports =
         try
         {
             var targetData = await itemModel.findOne({name: objectName}); //find target in database
-            if(!targetData) return message.channel.send(`${input} is not a valid object`);
+            if(!targetData) return message.channel.send(`${objectName} is not a valid object`);
 
             if(targetData.objType === "crate") //Only crates are currently supported for use
             {
@@ -35,6 +40,11 @@ module.exports =
 
                     //Get corresponding obj type
                     var prizeType;
+                    const splitRates = targetData.rates.split(" "); //Split barcode into components
+                    const commonRate = parseInt(splitRates[1]); //Save all rates
+                    const uniqueRate = parseInt(splitRates[2]);
+                    const rareRate = parseInt(splitRates[3]);
+
                     if(0 < rand && rand <= commonRate) prizeType = "common";
                     else if(commonRate < rand && rand <= uniqueRate) prizeType = "unique";
                     else if(uniqueRate < rand && rand <= rareRate) prizeType = "rare";
@@ -42,7 +52,7 @@ module.exports =
 
                     //Get random object
                     var prize;
-                    const prizeData = await itemModel.find({tier: prizeType}); //Get array of prizes
+                    const prizeData = await itemModel.find({tier: prizeType, objType: "item"}); //Get array of prizes
                     const prizePosition = getRandomInt(prizeData.length);
                     prize = prizeData[prizePosition].name;
 
@@ -67,6 +77,8 @@ module.exports =
                         $set: { "inventory.$" : prize},
                     }
                     );
+
+                    return message.channel.send(`You got a ${prize} from your ${objectName}`) //Let user know
                 }
                 else
                 {
