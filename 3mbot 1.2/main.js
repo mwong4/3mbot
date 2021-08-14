@@ -6,8 +6,9 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Auction
 -Trading
+
+-Auction
 
 -Items w/ Image Support
 -Bank Interest

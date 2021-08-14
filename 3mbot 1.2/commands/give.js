@@ -22,7 +22,7 @@ module.exports =
 
         const amount = args[0];
         const target = message.mentions.users.first();
-        if(!target) return message.channel.send("ERROR: user does not exist");
+        if(!target) return message.channel.send("ERROR: User does not exist");
 
         if(Number.isNaN(+amount))
         {

@@ -12,8 +12,9 @@ module.exports =
     aliases: ['ping', 'test'],
     permissions: [],
     description: "Ping test command. Syntax: >ping",
-    execute(client, message, args)
+    async execute(client, message, args)
     {
-        message.channel.send(args.splice(0, args.length).join(" ")); //Send 'ping' in channel
+        console.log(arr);
+        //message.channel.send(args.splice(0, args.length).join(" ")); //Send 'ping' in channel
     },
 };
