@@ -33,7 +33,7 @@ async function updateCoins(_myAmount, _partnerAmount, _me, _partner)
 }
 
 //Function for updating objects in DB
-async function updateObjs(_myList, _partnerList, _me, _partner)
+async function updateObjs(_myList, _me, _partner)
 {
     for(const obj of _myList) //update me
     {
@@ -59,39 +59,6 @@ async function updateObjs(_myList, _partnerList, _me, _partner)
         const responseThree = await profileModel.findOneAndUpdate( //Add to partner
         {
             userID: _partner,
-        }, 
-        {
-            $push: {
-                inventory: obj,
-            },
-        }
-        );
-    }
-
-    for(const obj of _partnerList) //Update partner
-    {
-        const responseOne = await profileModel.findOneAndUpdate(
-        {
-            userID: _partner,
-            inventory: obj,
-        }, 
-        {
-            $set: { "inventory.$" : null},
-        }
-        );
-        const responseTwo = await profileModel.findOneAndUpdate( //Remove any null figures in inventory
-        {
-            userID: _partner,
-        }, 
-        {
-            $pull: {
-                inventory: null,
-            },
-        }
-        );
-        const responseThree = await profileModel.findOneAndUpdate( //Add to me
-        {
-            userID: _me,
         }, 
         {
             $push: {
@@ -228,7 +195,9 @@ module.exports =
                     await updateCoins(Number(myStuff[0]), Number(partnerStuff[0]), message.author.id, partner.id); //Update coins
                 }
 
-                await updateObjs(myStuff.slice(1), partnerStuff.slice(1), message.author.id, partner.id);//Update everything else
+                await updateObjs(myStuff.slice(1), message.author.id, partner.id);//Update everything else
+                await updateObjs(partnerStuff.slice(1), partner.id, message.author.id);//Update everything else
+
                 return message.channel.send(`Trade: ${myStuff.join(", ")} for ${partnerStuff.join(", ")} complete`);
             }
         }
