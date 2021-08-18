@@ -14,7 +14,7 @@ const marketSchema = new mongoose.Schema({
     latestBid: {type: Number, default: 0},
     creationDate: {type: Date},
     expiryDate: {type: Date},
-    inventory: {type: [String]},
+    items: {type: [String]},
     auction: {type: Boolean},
 })
 

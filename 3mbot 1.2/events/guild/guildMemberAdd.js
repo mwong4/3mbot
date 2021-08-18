@@ -18,7 +18,7 @@ module.exports = async(client, discord, member) =>{
         daily: true,
         coins: 1000,
         bank: 0,
-        boostReward: false,
+        boostReward: 0,
         inventory: []
     });
     profile.save(); //Save profile to database  
