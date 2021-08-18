@@ -10,7 +10,6 @@ const itemModel = require('../models/itemSchema');
 //Function for updating coins in DB
 async function updateCoins(_myAmount, _partnerAmount, _me, _partner)
 {
-    console.log("update");
     const responseOne = await profileModel.findOneAndUpdate(
     {
         userID: _me,
@@ -34,9 +33,8 @@ async function updateCoins(_myAmount, _partnerAmount, _me, _partner)
 }
 
 //Function for updating objects in DB
-async function updateObjs(_myList, _partnerList, _me, _partner, _callback)
+async function updateObjs(_myList, _partnerList, _me, _partner)
 {
-    console.log("update 2");
     for(const obj of _myList) //update me
     {
         const responseOne = await profileModel.findOneAndUpdate(
@@ -102,7 +100,7 @@ async function updateObjs(_myList, _partnerList, _me, _partner, _callback)
         }
         );
     }
-    _callback();
+    return;
 }
 
 //To sort through argument list
@@ -204,15 +202,9 @@ module.exports =
                     message = message.first()
                     if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') //When confirmed, call functions to run DB update 
                     {
-                        //See if coins are exchanged. If yes, exchange
-                        if(myStuff[0] != "0" || partnerStuff[0] != "0")
-                        {
-                            updateCoins(Number(myStuff[0]), Number(partnerStuff[0]), message.author.id, partner.id); //Update coins
-                        }
-
-                        updateObjs(myStuff.slice(1), partnerStuff.slice(1), message.author.id, partner.id, function() { //Update everything else
-                            return message.channel.send(`Trade: ${myStuff.join(", ")} for ${partnerStuff.join(", ")} complete`);
-                        }); 
+                        console.log("YES");
+                        updateStuff();
+                        return;
                     } 
                     else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
                     {
@@ -227,6 +219,18 @@ module.exports =
                     message.channel.send('ERROR: Timeout');
                 });
             })
+
+            async function updateStuff()//If we are told to update
+            {
+                //See if coins are exchanged. If yes, exchange
+                if(myStuff[0] != "0" || partnerStuff[0] != "0")
+                {
+                    await updateCoins(Number(myStuff[0]), Number(partnerStuff[0]), message.author.id, partner.id); //Update coins
+                }
+
+                await updateObjs(myStuff.slice(1), partnerStuff.slice(1), message.author.id, partner.id);//Update everything else
+                return message.channel.send(`Trade: ${myStuff.join(", ")} for ${partnerStuff.join(", ")} complete`);
+            }
         }
         catch(err)
         {
