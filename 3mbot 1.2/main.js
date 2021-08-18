@@ -6,9 +6,14 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Trading
+-MarketItem (to auction something)
+-MarketWithdraw (take item out of auction)
 
--Auction
+-[Update] check (so that if auctioning, it will return data)
+-Market (to browse auction) (page 1, page 2, etc...)
+
+-Bid
+-AuctionCollect (collect reward)
 
 -Items w/ Image Support
 -Bank Interest
