@@ -7,7 +7,6 @@ Follow Tutorials: CodeLyon
 
 TODO
 -Market 1/2/3/...
--Market item/crate
 
 -Bid
 -AuctionCollect (collect reward)
