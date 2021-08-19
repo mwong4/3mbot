@@ -6,8 +6,6 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Market 1/2/3/...
-
 -Bid
 -AuctionCollect (collect reward)
 

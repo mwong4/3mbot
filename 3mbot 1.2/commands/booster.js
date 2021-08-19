@@ -27,9 +27,6 @@ module.exports =
                 var futureDate = new Date();
                 futureDate.setHours(todayDate.getHours() + 6); //using ust time
 
-                console.log(targetData.boosterTime.getTime());
-                console.log(todayDate.getTime());
-
                 if(targetData.boosterTime.getTime() < todayDate.getTime())
                 {
                     const response = await profileModel.findOneAndUpdate(
@@ -45,9 +42,13 @@ module.exports =
                             {
                                 boosterTime: futureDate,
                             },
+                            $push:
+                            {
+                                inventory: "unique_crate",
+                            },
                         }
                         );
-                    return message.channel.send(`Thank you ${message.author.username} for boosting! You have recieved _____ as a gift! Come back in 6 hours`);   
+                    return message.channel.send(`Thank you ${message.author.username} for boosting! You have recieved a rare unique as a gift! Come back in 6 hours`);   
                 }
                 else
                 {
