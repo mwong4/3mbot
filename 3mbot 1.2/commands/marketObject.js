@@ -20,6 +20,7 @@ module.exports =
 
         const startingPrice = args[0];
         const timeToSell = args[1];
+        const myID = message.author.id;
 
         var auction = false;
 
@@ -50,7 +51,7 @@ module.exports =
             }
 
             let event = await marketModel.create({ //make profile
-                sellerID: message.author.Discord,
+                sellerID: myID,
                 startingPrice: startingPrice,
                 latestBidID: null,
                 latestBid: 0,
