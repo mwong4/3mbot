@@ -16,6 +16,7 @@ const marketSchema = new mongoose.Schema({
     expiryDate: {type: Date},
     items: {type: [String]},
     auction: {type: Boolean},
+    completed: {type: Boolean, default: false},
 })
 
 //Actual data (model)

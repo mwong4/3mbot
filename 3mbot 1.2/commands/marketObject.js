@@ -59,6 +59,7 @@ module.exports =
                 expiryDate: futureDate,
                 items: items,
                 auction: auction,
+                completed: false,
             });
             event.save(); //Save profile to database 
 

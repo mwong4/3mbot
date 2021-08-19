@@ -6,6 +6,7 @@ Purpose: To test adding field to database
 
 const profileModel = require('../models/profileSchema'); //Get model
 const itemModel = require('../models/itemSchema');
+const marketModel = require('../models/marketSchema');
 
 module.exports = 
 {
@@ -17,6 +18,7 @@ module.exports =
     {
         try
         {
+            /*
             await itemModel.updateMany( //add date as field
             {
             
@@ -26,6 +28,7 @@ module.exports =
                 multi: true,
             },
             );
+            */
 
             /*
             await profileModel.updateMany( //remove field (field must be in schema)
@@ -37,6 +40,14 @@ module.exports =
             },
             );
             */
+
+            await marketModel.updateMany( //add date as field
+            { },
+            {
+                $set: {completed: false},
+                multi: true,
+            },
+            );
 
             return message.channel.send("Patch Installed");
         }

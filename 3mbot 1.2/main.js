@@ -6,8 +6,8 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Bid
--AuctionCollect (collect reward)
+-bid
+-collect (collect reward)
 
 -Items w/ Image Support
 -Bank Interest
