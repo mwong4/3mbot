@@ -169,7 +169,6 @@ module.exports =
                     message = message.first()
                     if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') //When confirmed, call functions to run DB update 
                     {
-                        console.log("YES");
                         updateStuff();
                         return;
                     } 

@@ -1,7 +1,7 @@
 /*
 Author: Iamwaxy
 Date Created: Aug 18, 2021
-Purpose: To sell/auction an item
+Purpose: To see the listings of events on the market
 */
 
 const marketModel = require('../models/marketSchema'); //get model
@@ -14,14 +14,13 @@ module.exports =
     description: "To see listings on the market. Syntax: >market  filter(ie: mine, 1, 2, 3, crate, item)",
     async execute(client, message, args, Discord, profileData)
     {
-    
-    const filter = args[0]; //Get filter command
+        const filter = args[0]; //Get filter command
 
         try
         {
             if(filter === "mine")
             {
-                const data = await marketModel.find({sellerID: message.author.id}); //By default, get all
+                const data = await marketModel.find({sellerID: message.author.id}); //get all events listed under author's id
 
                 const newEmbed = new Discord.MessageEmbed() //make embed
                 .setTitle(`Your Listed Items`)
@@ -29,6 +28,7 @@ module.exports =
 
                 if(data)
                 {
+                    var counter = 1;
 
                     for(const event of data) //Go through each event
                     {
@@ -53,8 +53,9 @@ module.exports =
                             value = event.latestBid;
                         }
 
-                        newEmbed.addField(`(${type}) event`, `${event.items} ~$${value}`);
+                        newEmbed.addField(`(${type}) event #${counter} (<-- code)`, `${event.items} ~$${value}`);
                     }
+                    counter ++; //increase counter
                 }
                 else
                 {
