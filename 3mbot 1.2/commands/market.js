@@ -5,6 +5,7 @@ Purpose: To see the listings of events on the market
 */
 
 const marketModel = require('../models/marketSchema'); //get model
+const profileModel = require('../models/profileSchema'); //get models
 
 module.exports = 
 {
@@ -14,13 +15,13 @@ module.exports =
     description: "To see listings on the market. Syntax: >market  filter(ie: mine, 1, 2, 3, crate, item)",
     async execute(client, message, args, Discord, profileData)
     {
-        const filter = args[0]; //Get filter command
+        const filterWord = args[0]; //Get filter command
 
         try
         {
-            if(!isNaN(filter)) //If filter is a number
+            if(!isNaN(filterWord)) //If filter is a number
             {
-                var filterNum = Number(filter);
+                var filterNum = Number(filterWord);
                 if(filterNum % 1 != 0 || filterNum < 1) return message.channel.send("ERROR: Page number must be a positive whole number"); //Filter out negatives or decimals
 
                 const data = await marketModel.find({}); //get all events
@@ -37,7 +38,7 @@ module.exports =
                 }
 
                 const newEmbed = new Discord.MessageEmbed() //make embed
-                .setTitle(`Market Page ${filter}`)
+                .setTitle(`Market Page ${filterWord}`)
                 .setColor('#D4FEE8')
 
                 var top;
@@ -75,11 +76,162 @@ module.exports =
                         value = data[i].latestBid;
                     }
 
-                    newEmbed.addField(`(${type}) event #${i} (<-- code)`, `${data[i].items} ~$${value}`, false);
+                    newEmbed.addField(`(${type}) event #${i} (<-- code)`, `${data[i].items} for ~$${value} (ending at ${data[i].expiryDate})`, false);
                 }
 
                 //Display filter in embed
-                return message.channel.send(newEmbed);
+                message.channel.send(newEmbed);
+
+                //Get input for if person wants to bid
+                let filter = m => m.author.id === message.author.id
+                message.channel.send(`To bid on an auction, please reply with: [ =bid #auctionCode ]. This message will expire in 60 seconds`).then(() => {
+                    message.channel.awaitMessages(filter, {
+                        max: 1,
+                        time: 60000,
+                        errors: ['time']
+                    })
+                    .then(message => {
+                        message = message.first()
+                        const segments = message.content.split(" ");
+                        if (segments[0] != '=bid') //If not a bid, terminate section
+                        {
+                            return message.channel.send(`Terminated`);
+                        } 
+                        else 
+                        {
+                            console.log("entered");
+                            if(segment[1] >= data.length) return message.channel.send(`Terminated: Code does not exist`);
+
+                            //Else, process request
+                            const objId = data[segment[1]]._id; //First get object unique id
+                            doubleCheck(objId);
+                            return;
+                        }
+                    })
+                    .catch(collected => {
+                        message.channel.send('ERROR: Timeout');
+                    });
+                })
+
+                async function doubleCheck(_objId)
+                {
+                    const dataDoubleCheck = await marketModel.findOne({_id: _objId}); //Get up to date data
+                    
+                    //Calculate new value
+                    var cost;
+                    if(dataDoubleCheck.latestBid === 0) cost = dataDoubleCheck.startingPrice + 500;
+                    else cost = dataDoubleCheck.startingPrice + 500;
+
+                    //Calculate raise amount
+                    var raiseAmount;
+                    if(cost < 5000) raiseAmount = 500
+                    else if(cost < 20000) raiseAmount = 1000;
+                    else raiseAmount = 2500;
+
+                    //Make sure date is good
+                    const todayDate = new Date();
+                    if(dataDoubleCheck.expiryDate.getTime() < todayDate.getTime()) return message.channel.send("ERROR: Auction has expired");
+                    
+                    //Make sure person has enough money
+                    const personalData = await profileModel.findOne({userID: message.author.id});
+                    if(personalData.coins < cost + raiseAmount) return message.channel.send(`ERROR: You do not have enough money (${cost + raiseAmount})`);
+
+                    //Get other player's confirmation. Initiator can cancel
+                    let filter = m => m.author.id === message.author.id
+                    message.channel.send(`Bidding ${cost + raiseAmount} (raised $500) on [${dataDoubleCheck.items}], please reply with <YES> to confirm the PERMANENT bid. This message will expire in 30 seconds`).then(() => {
+                    message.channel.awaitMessages(filter, {
+                        max: 1,
+                        time: 30000,
+                        errors: ['time']
+                        })
+                        .then(message => {
+                            message = message.first()
+                            if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') //When confirmed, call functions to run DB update 
+                            {
+                                updateStuff(_objId, cost + raiseAmount);
+                                return;
+                            } 
+                            else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
+                            {
+                                return message.channel.send(`Terminated`);
+                            } 
+                            else 
+                            {
+                                return message.channel.send(`Terminated: Invalid Response`);
+                            }
+                        })
+                        .catch(collected => {
+                            message.channel.send('ERROR: Timeout');
+                        });
+                    })
+                }
+
+                async function updateStuff(_objId, _amount)
+                {
+                    //Check Date
+                    const todayDate = new Date();
+                    if(dataTripleCheck.expiryDate.getTime() < todayDate.getTime()) return message.channel.send("ERROR: Auction has expired");
+
+                    //Check transaction 1 more time
+                    const dataTripleCheck = await marketModel.findOne({_id: _objId}); //Get up to date data
+                    const personalData = await profileModel.findOne({userID: message.author.id});
+                    if(personalData.coins < _amount) return message.channel.send(`ERROR: You do not have enough money (${cost + raiseAmount})`);
+                    
+                    //Make sure that in the waiting time someone has not bid over user
+                    if(_amount === dataTripleCheck.latestBid) return message.channel.send(`ERROR: Someone has bid over you. Use [ >bid ${_objId} ] to attempt again`);
+
+                    //Now all good!
+                    
+                    if(dataTripleCheck.latestBid != 0) //Make sure not doing this to empty bid
+                    {
+                        //Give money back to prev bider
+                        const responseOne = await profileModel.findOneAndUpdate(
+                        {
+                            userID: dataTripleCheck.latestBidID,
+                        }, 
+                        {
+                            $inc: {
+                                coins: dataTripleCheck.latestBid,
+                            },
+                        }
+                        );
+                    }
+
+                    //Take money from new bidder
+                    const responseTwo = await profileModel.findOneAndUpdate(
+                    {
+                        userID: message.author.id,
+                    }, 
+                    {
+                        $inc: {
+                            coins: -_amount,
+                        },
+                    }
+                    );
+                    //record money from new bidder into auction
+                    const responseThree = await marketModel.findOneAndUpdate(
+                    {
+                        _id: _objId,
+                    }, 
+                    {
+                        $set: {
+                            latestBid: _amount,
+                        },
+                    }
+                    );
+                    //record new bidder into auction
+                    const responseFour = await marketModel.findOneAndUpdate(
+                    {
+                        _id: _objId,
+                    }, 
+                    {
+                        $set: {
+                            latestBidId: message.author.id,
+                        },
+                    }
+                    );
+                    return message.channel.send("Bid submitted successfully");
+                }
             }
             else if(filter === "mine")
             {
@@ -116,7 +268,7 @@ module.exports =
                             value = event.latestBid;
                         }
 
-                        newEmbed.addField(`(${type}) event #${counter} (<-- code)`, `${event.items} ~$${value}`, false);
+                        newEmbed.addField(`(${type}) event #${counter} (<-- code)`, `${event.items} for ~$${value}  (ending at ${event.expiryDate})`, false);
                     }
                     counter ++; //increase counter
                 }
