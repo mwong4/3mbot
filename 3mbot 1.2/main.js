@@ -9,7 +9,6 @@ TODO
 -Patch marketObj
 -buy
 
--Show that you are wining auction
 -data handling (statistics)
 -collect (collect reward)
 -test

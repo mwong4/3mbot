@@ -58,6 +58,8 @@ module.exports =
 
                 for(let i = ((filterNum*10)-10) ; i < top; i++)
                 {
+                    var winIndicator = "";
+
                     if(data[i].auction) //Check to see if it is auction or just selling
                     {
                         type = "auction";
@@ -76,7 +78,12 @@ module.exports =
                         value = data[i].latestBid;
                     }
 
-                    newEmbed.addField(`(${type}) event #${i} (<-- code)`, `[${data[i].items}] for ~$${value} (ending at ${data[i].expiryDate})  <Hex: ${data[i]._id}>`, false);
+                    if(data[i].latestBidID == message.author.id)
+                    {
+                        winIndicator = "(You are Winning)";
+                    }
+
+                    newEmbed.addField(`(${type}) event #${i} (<-- code) ${winIndicator}`, `[${data[i].items}] for ~$${value} (ending at ${data[i].expiryDate})  <Hex: ${data[i]._id}>`, false);
                 }
 
                 //Display filter in embed
