@@ -47,7 +47,7 @@ module.exports =
 
             for(const obj of items) //Check to see if person has item and if item exists
             {
-                if(!userData.inventory.includes(obj)) return message.channel.send(`ERROR: You do not own the item: ${obj}`); //Check inv
+                if(includesNum(userData.inventory, obj) < includesNum(items, obj)) return message.channel.send(`ERROR: You do not own the item(s): ${obj} x${includesNum(items, obj)}`); //Check inv
 
                 const itemData = await itemModel.findOne({name: obj});
                 if(!itemData) return message.channel.send(`ERROR: ${obj} is not a valid item`); //Check db
@@ -99,3 +99,13 @@ module.exports =
         }
     },
 };
+
+function includesNum(_array, _filter)
+{
+    var counter = 0;
+    for(const element of _array)
+    {
+        if(element == _filter) counter ++;
+    }
+    return counter;
+}

@@ -6,7 +6,6 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Patch marketObj
 -buy
 
 -data handling (statistics)

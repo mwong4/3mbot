@@ -21,17 +21,21 @@ module.exports =
 
         //message.channel.send(args.splice(0, args.length).join(" ")); //Send 'ping' in channel
 
-        var todayDate = new Date(); //Set dates
-        var futureDate = new Date();
-        futureDate.setHours(todayDate.getHours() + 48);
+        var input = 10;
+        var input2 = 0;
 
-        console.log(todayDate);
-        console.log(futureDate);
-
-
-        /*
-        message.channel.send(todayDate);
-        message.channel.send(futureDate);
-        */
+        if(test(input2))
+        {
+            console.log("yes");
+        }
+        else
+        {
+            console.log("no");
+        }
     },
 };
+
+function test(_input)
+{
+    return _input;
+}
