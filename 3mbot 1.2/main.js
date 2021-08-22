@@ -6,11 +6,10 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--test collect
-
--Items w/ Image Support
 -Bank Interest
 -Bank Upgrade
+
+-Items w/ Image Support
 -Visual Iterface
 
 -Implement ACTUAL item value

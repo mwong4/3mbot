@@ -123,7 +123,7 @@ module.exports = () =>
         for(const item of _items)
         {
             const data = await itemModel.findOne({name: item});
-            const newAvg = Math.round(((_cost / _item.length) + (data.averageValue*data.numberSold)) / (data.numberSold + 1))
+            const newAvg = Math.round(((_cost / _items.length) + (data.averageValue*data.numberSold)) / (data.numberSold + 1))
 
             const responseThree = await itemModel.findOneAndUpdate(
             {
