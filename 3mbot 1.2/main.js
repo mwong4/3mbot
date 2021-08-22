@@ -6,11 +6,11 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--bid
--secondary bid command
+-Patch marketObj
 -buy
 
--data handling
+-Show that you are wining auction
+-data handling (statistics)
 -collect (collect reward)
 -test
 
@@ -33,6 +33,7 @@ TODO
 -data on db correct
 -prev person get's returned money
 -triple check correct
+-Someone bid while in delay error trigger
 */ 
 
 const fs = require('fs'); //Allow to acces other js files

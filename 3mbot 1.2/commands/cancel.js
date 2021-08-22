@@ -11,6 +11,8 @@ async function removeEvent(_message, _items, _eventID)
 {
     try
     {
+        const data = await marketModel.findOne({_id: _eventID});
+
         for(const obj of _items)
         {
             //add items back into inventory
@@ -24,8 +26,18 @@ async function removeEvent(_message, _items, _eventID)
             );
         }
     
+        //Give bider money back
+        const responseTwo = await profileModel.findOneAndUpdate(
+        {
+            userID: data.latestBidID,
+        }, 
+        {
+            $inc: { coins: data.latestBid },
+        }
+        );
+
         //remove market event
-        const responseTwo = await marketModel.deleteOne(
+        const responseThree = await marketModel.deleteOne(
         {
             
             _id: _eventID,

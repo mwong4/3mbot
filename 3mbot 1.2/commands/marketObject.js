@@ -1,7 +1,9 @@
 /*
 Author: Iamwaxy
 Date Created: Aug 18, 2021
-Purpose: To sell/auction an item
+Purpose: To sell/auction an items
+
+PATCH -> includes with numbers for inventory check
 */
 
 const marketModel = require('../models/marketSchema'); //get model
@@ -19,7 +21,7 @@ module.exports =
         if(args.length < 4) return message.channel.send("ERROR: Missing arguments"); //Make sure enough arguments provided
 
         const startingPrice = args[0];
-        const timeToSell = args[1];
+        const timeToSell = Number(args[1]);
         const myID = message.author.id;
 
         var auction = false;
@@ -31,6 +33,7 @@ module.exports =
 
         if(startingPrice % 1 != 0 || startingPrice < 0) return message.channel.send('ERROR: Price/Starting Price must be a positive whole number'); //make sure input is not negative and is whole first
         if(timeToSell % 1 != 0 || timeToSell < 0) return message.channel.send('ERROR: Selling time must be a positive whole number'); //make sure input is not negative and is whole first
+        if(timeToSell > 336) return message.channel.send('ERROR: Selling time over 14 days'); //make sure input within limit
 
         var todayDate = new Date(); //Set dates
         var futureDate = new Date();

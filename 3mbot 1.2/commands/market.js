@@ -76,7 +76,7 @@ module.exports =
                         value = data[i].latestBid;
                     }
 
-                    newEmbed.addField(`(${type}) event #${i} (<-- code)`, `${data[i].items} for ~$${value} (ending at ${data[i].expiryDate})`, false);
+                    newEmbed.addField(`(${type}) event #${i} (<-- code)`, `[${data[i].items}] for ~$${value} (ending at ${data[i].expiryDate})  <Hex: ${data[i]._id}>`, false);
                 }
 
                 //Display filter in embed
@@ -84,27 +84,36 @@ module.exports =
 
                 //Get input for if person wants to bid
                 let filter = m => m.author.id === message.author.id
-                message.channel.send(`To bid on an auction, please reply with: [ =bid #auctionCode ]. This message will expire in 60 seconds`).then(() => {
+                message.channel.send(`To bid or buy, please reply with: [ =select #eventCode ]. This message will expire in 5 minutes`).then(() => {
                     message.channel.awaitMessages(filter, {
                         max: 1,
-                        time: 60000,
+                        time: 300000,
                         errors: ['time']
                     })
                     .then(message => {
                         message = message.first()
                         const segments = message.content.split(" ");
-                        if (segments[0] != '=bid') //If not a bid, terminate section
+                        if (segments[0] != '=select') //If not a bid, terminate section
                         {
                             return message.channel.send(`Terminated`);
                         } 
                         else 
                         {
-                            console.log("entered");
-                            if(segment[1] >= data.length) return message.channel.send(`Terminated: Code does not exist`);
-
+                            if(isNaN(segments[1])) return message.channel.send("Terminated: Code is not a number"); //Make sure input is number
+                            if(Number(segments[1]) % 1 != 0 || Number(segments[1]) < 0) return message.channel.send("Terminated: Bid code is not a positive whole number");
+                            if(Number(segments[1]) >= data.length) return message.channel.send(`Terminated: Code does not exist`);
+                            
+                            
                             //Else, process request
-                            const objId = data[segment[1]]._id; //First get object unique id
-                            doubleCheck(objId);
+                            if(data[segments[1]].auction) //If auction
+                            {
+                                const objId = data[segments[1]]._id; //First get object unique id
+                                doubleCheck(objId);
+                            }
+                            else //otherwise use sell function
+                            {
+                                console.log("Is not auction");
+                            }
                             return;
                         }
                     })
@@ -119,8 +128,8 @@ module.exports =
                     
                     //Calculate new value
                     var cost;
-                    if(dataDoubleCheck.latestBid === 0) cost = dataDoubleCheck.startingPrice + 500;
-                    else cost = dataDoubleCheck.startingPrice + 500;
+                    if(dataDoubleCheck.latestBid === 0) cost = dataDoubleCheck.startingPrice;
+                    else cost = dataDoubleCheck.latestBid;
 
                     //Calculate raise amount
                     var raiseAmount;
@@ -138,7 +147,7 @@ module.exports =
 
                     //Get other player's confirmation. Initiator can cancel
                     let filter = m => m.author.id === message.author.id
-                    message.channel.send(`Bidding ${cost + raiseAmount} (raised $500) on [${dataDoubleCheck.items}], please reply with <YES> to confirm the PERMANENT bid. This message will expire in 30 seconds`).then(() => {
+                    message.channel.send(`Bidding ${cost + raiseAmount} (raised $${raiseAmount}) on [${dataDoubleCheck.items}], please reply with <YES> to confirm the PERMANENT bid. This message will expire in 30 seconds`).then(() => {
                     message.channel.awaitMessages(filter, {
                         max: 1,
                         time: 30000,
@@ -168,13 +177,14 @@ module.exports =
 
                 async function updateStuff(_objId, _amount)
                 {
+                    const dataTripleCheck = await marketModel.findOne({_id: _objId}); //Get up to date data
+                    const personalData = await profileModel.findOne({userID: message.author.id});
+
                     //Check Date
                     const todayDate = new Date();
                     if(dataTripleCheck.expiryDate.getTime() < todayDate.getTime()) return message.channel.send("ERROR: Auction has expired");
 
                     //Check transaction 1 more time
-                    const dataTripleCheck = await marketModel.findOne({_id: _objId}); //Get up to date data
-                    const personalData = await profileModel.findOne({userID: message.author.id});
                     if(personalData.coins < _amount) return message.channel.send(`ERROR: You do not have enough money (${cost + raiseAmount})`);
                     
                     //Make sure that in the waiting time someone has not bid over user
@@ -226,14 +236,14 @@ module.exports =
                     }, 
                     {
                         $set: {
-                            latestBidId: message.author.id,
+                            latestBidID: message.author.id,
                         },
                     }
                     );
                     return message.channel.send("Bid submitted successfully");
                 }
             }
-            else if(filter === "mine")
+            else if(filterWord === "mine")
             {
                 const data = await marketModel.find({sellerID: message.author.id}); //get all events listed under author's id
 
@@ -269,8 +279,9 @@ module.exports =
                         }
 
                         newEmbed.addField(`(${type}) event #${counter} (<-- code)`, `${event.items} for ~$${value}  (ending at ${event.expiryDate})`, false);
+                        counter ++; //increase counter
                     }
-                    counter ++; //increase counter
+                    
                 }
                 else
                 {
