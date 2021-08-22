@@ -6,6 +6,7 @@ Purpose: To see the listings of events on the market
 
 const marketModel = require('../models/marketSchema'); //get model
 const profileModel = require('../models/profileSchema'); //get models
+const itemModel = require('../models/itemSchema');
 
 module.exports = 
 {
@@ -171,7 +172,7 @@ module.exports =
                     if(data.expiryDate.getTime() < todayDate.getTime()) return message.channel.send("ERROR: Item sale has expired");
 
                     //Perform transaction
-                    const responseOne = await profileModel.findOneAndUpdate(
+                    const responseOne = await profileModel.findOneAndUpdate( //remove money from person and give items
                     {
                         userID: message.author.id,
                     }, 
@@ -185,12 +186,44 @@ module.exports =
                     }
                     );
 
+                    const responseTwo = await profileModel.findOneAndUpdate( //give money to owner
+                    {
+                        userID: data.sellerID,
+                    }, 
+                    {
+                        $inc: {
+                            coins: data.startingPrice,
+                        },
+                    }
+                    );
+
                     //remove market event
-                    const responseTwo = await marketModel.deleteOne(
+                    const responseThree = await marketModel.deleteOne(
                     {
                         _id: _objId,
                     }, 
                     );
+
+                    //Update item data
+                    for(const item of data.items)
+                    {
+                        const itemData = await itemModel.findOne({name: item});
+                        const newAvg = Math.round(((data.startingPrice / data.items.length) + (itemData.averageValue*itemData.numberSold)) / (itemData.numberSold + 1))
+
+                        const responseFour = await itemModel.findOneAndUpdate(
+                        {
+                            name: item,
+                        }, 
+                        {
+                            $inc: {
+                                numberSold : 1,
+                            },
+                            $set: {
+                                averageValue: newAvg,
+                            },
+                        }
+                        );
+                    }
 
                     return message.channel.send(`Purchase complete of ${data.items}`);
                 }

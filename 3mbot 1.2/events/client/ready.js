@@ -7,8 +7,9 @@ Follow Tutorials: CodeLyon
 */
 
 const cron = require('cron'); //Import date/time reader package
-const profileModel = require('../../models/profileSchema'); //get schema+model
-const marketModel = require('../../models/marketSchema'); //get model
+const profileModel = require('../../models/profileSchema'); //get models
+const marketModel = require('../../models/marketSchema');
+const itemModel = require('../../models/itemSchema');
 
 module.exports = () =>
 {
@@ -42,7 +43,7 @@ module.exports = () =>
 
     async function processMarket()
     {
-        const data = await marketModel.findOne({}); //get all market events
+        const data = await marketModel.find({}); //get all market events
         const todayDate = new Date();
 
         //Sift through all market events
@@ -117,6 +118,28 @@ module.exports = () =>
             },
         }
         );
+
+        //Update item data
+        for(const item of _items)
+        {
+            const data = await itemModel.findOne({name: item});
+            const newAvg = Math.round(((_cost / _item.length) + (data.averageValue*data.numberSold)) / (data.numberSold + 1))
+
+            const responseThree = await itemModel.findOneAndUpdate(
+            {
+                name: item,
+            }, 
+            {
+                $inc: {
+                    numberSold : 1,
+                },
+                $set: {
+                    averageValue: newAvg,
+                },
+            }
+            );
+
+        }
     }
 
     //remove market event by id
@@ -130,4 +153,14 @@ module.exports = () =>
     let marketTimer = new cron.CronJob('0 */5 * * * *', processMarket);
     dailyTimer.start();
     marketTimer.start();
+}
+
+function includesNum(_array, _filter)
+{
+    var counter = 0;
+    for(const element of _array)
+    {
+        if(element == _filter) counter ++;
+    }
+    return counter;
 }

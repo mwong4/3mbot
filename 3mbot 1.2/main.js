@@ -6,16 +6,12 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--collect (collect reward)
 -test collect
-
--data handling (statistics)
--test data
--test expiry
 
 -Items w/ Image Support
 -Bank Interest
 -Bank Upgrade
+-Visual Iterface
 
 -Implement ACTUAL item value
 -Implement spreadsheet export
