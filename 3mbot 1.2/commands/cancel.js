@@ -21,20 +21,23 @@ async function removeEvent(_message, _items, _eventID)
                 userID: _message.author.id,
             }, 
             {
-                $push: { inventory : obj},
+                $push: { inventory : obj },
             }
             );
         }
     
         //Give bider money back
-        const responseTwo = await profileModel.findOneAndUpdate(
+        if(data.latestBid != 0)
         {
-            userID: data.latestBidID,
-        }, 
-        {
-            $inc: { coins: data.latestBid },
+            const responseTwo = await profileModel.findOneAndUpdate(
+            {
+                userID: data.latestBidID,
+            }, 
+            {
+                $inc: { coins: data.latestBid },
+            }
+            );
         }
-        );
 
         //remove market event
         const responseThree = await marketModel.deleteOne(

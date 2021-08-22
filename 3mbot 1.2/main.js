@@ -6,11 +6,11 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
+-collect (collect reward)
+-test collect
 
 -data handling (statistics)
--collect (collect reward)
 -test data
--test collect
 -test expiry
 
 -Items w/ Image Support
