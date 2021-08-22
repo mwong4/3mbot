@@ -110,16 +110,43 @@ module.exports =
                             if(Number(segments[1]) % 1 != 0 || Number(segments[1]) < 0) return message.channel.send("Terminated: Bid code is not a positive whole number");
                             if(Number(segments[1]) >= data.length) return message.channel.send(`Terminated: Code does not exist`);
                             
-                            
+                            const objId = data[segments[1]]._id; //First get object unique id
+
                             //Else, process request
                             if(data[segments[1]].auction) //If auction
                             {
-                                const objId = data[segments[1]]._id; //First get object unique id
-                                doubleCheck(objId);
+                                doubleCheckBid(objId);
                             }
                             else //otherwise use sell function
                             {
-                                console.log("Is not auction");
+                                //Get confirmation
+                                let filter = m => m.author.id === message.author.id
+                                message.channel.send(`Paying ${data[segments[1]].startingPrice} for [${data[segments[1]].items}], please reply with <YES> to purchase. This message will expire in 30 seconds`).then(() => {
+                                message.channel.awaitMessages(filter, {
+                                    max: 1,
+                                    time: 30000,
+                                    errors: ['time']
+                                    })
+                                    .then(message => {
+                                        message = message.first()
+                                        if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') //When confirmed, call functions to run DB update 
+                                        {
+                                            updateStuffSell(objId);
+                                            return;
+                                        } 
+                                        else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
+                                        {
+                                            return message.channel.send(`Terminated`);
+                                        } 
+                                        else 
+                                        {
+                                            return message.channel.send(`Terminated: Invalid Response`);
+                                        }
+                                    })
+                                    .catch(collected => {
+                                        message.channel.send('ERROR: Timeout');
+                                    });
+                                })
                             }
                             return;
                         }
@@ -129,7 +156,46 @@ module.exports =
                     });
                 })
 
-                async function doubleCheck(_objId)
+                async function updateStuffSell(_objId)
+                {
+                    //Make sure item is still on market
+                    const data = await marketModel.findOne({_id: _objId}); //Get up to date data
+                    if(!data) return message.channel.send("ERROR: Event is no longer on the market. Someone has purchased first");
+
+                    //Make sure they have enough money
+                    const personalData = await profileModel.findOne({userID: message.author.id});
+                    if(personalData.coins < data.startingPrice) return message.channel.send(`ERROR: You do not have enough money ($${data.startingPrice})`);
+
+                    //Check expiry
+                    const todayDate = new Date();
+                    if(data.expiryDate.getTime() < todayDate.getTime()) return message.channel.send("ERROR: Item sale has expired");
+
+                    //Perform transaction
+                    const responseOne = await profileModel.findOneAndUpdate(
+                    {
+                        userID: message.author.id,
+                    }, 
+                    {
+                        $inc: {
+                            coins: -data.startingPrice,
+                        },
+                        $push: {
+                            inventory: { $each: data.items },
+                        },
+                    }
+                    );
+
+                    //remove market event
+                    const responseTwo = await marketModel.deleteOne(
+                    {
+                        _id: _objId,
+                    }, 
+                    );
+
+                    return message.channel.send(`Purchase complete of ${data.items}`);
+                }
+
+                async function doubleCheckBid(_objId)
                 {
                     const dataDoubleCheck = await marketModel.findOne({_id: _objId}); //Get up to date data
                     
@@ -152,7 +218,7 @@ module.exports =
                     const personalData = await profileModel.findOne({userID: message.author.id});
                     if(personalData.coins < cost + raiseAmount) return message.channel.send(`ERROR: You do not have enough money (${cost + raiseAmount})`);
 
-                    //Get other player's confirmation. Initiator can cancel
+                    //Get other player's confirmation
                     let filter = m => m.author.id === message.author.id
                     message.channel.send(`Bidding ${cost + raiseAmount} (raised $${raiseAmount}) on [${dataDoubleCheck.items}], please reply with <YES> to confirm the PERMANENT bid. This message will expire in 30 seconds`).then(() => {
                     message.channel.awaitMessages(filter, {
@@ -164,7 +230,7 @@ module.exports =
                             message = message.first()
                             if (message.content.toUpperCase() == 'YES' || message.content.toUpperCase() == 'Y') //When confirmed, call functions to run DB update 
                             {
-                                updateStuff(_objId, cost + raiseAmount);
+                                updateStuffBid(_objId, cost + raiseAmount);
                                 return;
                             } 
                             else if (message.content.toUpperCase() == 'NO' || message.content.toUpperCase() == 'N') 
@@ -182,7 +248,7 @@ module.exports =
                     })
                 }
 
-                async function updateStuff(_objId, _amount)
+                async function updateStuffBid(_objId, _amount)
                 {
                     const dataTripleCheck = await marketModel.findOne({_id: _objId}); //Get up to date data
                     const personalData = await profileModel.findOne({userID: message.author.id});
@@ -225,6 +291,7 @@ module.exports =
                         },
                     }
                     );
+
                     //record money from new bidder into auction
                     const responseThree = await marketModel.findOneAndUpdate(
                     {
@@ -236,6 +303,7 @@ module.exports =
                         },
                     }
                     );
+
                     //record new bidder into auction
                     const responseFour = await marketModel.findOneAndUpdate(
                     {

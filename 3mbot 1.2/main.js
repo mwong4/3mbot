@@ -6,11 +6,12 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--buy
 
 -data handling (statistics)
 -collect (collect reward)
--test
+-test data
+-test collect
+-test expiry
 
 -Items w/ Image Support
 -Bank Interest
@@ -19,19 +20,6 @@ TODO
 -Implement ACTUAL item value
 -Implement spreadsheet export
 -Implement improved purchased product data tracking
-
-//Test List//
--no =
--not existent code
--not int code
--Price calculations correct
--expiry correct
--coins count collect
--second confirm correct
--data on db correct
--prev person get's returned money
--triple check correct
--Someone bid while in delay error trigger
 */ 
 
 const fs = require('fs'); //Allow to acces other js files
