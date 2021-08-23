@@ -41,10 +41,10 @@ module.exports =
             );
             */
 
-            await marketModel.updateMany( //add date as field
+            await profileModel.updateMany( //add date as field
             { },
             {
-                $set: {completed: false},
+                $set: {dailyTrade: false},
                 multi: true,
             },
             );

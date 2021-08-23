@@ -25,6 +25,9 @@ module.exports =
                     daily: true,
                     coins: 1000,
                     bank: 0,
+                    bankCap: 5000,
+                    bankLevel: 1,
+                    dailyTrade: false,
                     boostReward: 0,
                     inventory: []
                 });

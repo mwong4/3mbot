@@ -38,7 +38,32 @@ module.exports = () =>
         }
         );
 
+        dailyInterest(); //Run update on interest
+
         console.log("Reset all daily's");
+    }
+
+    //For giving daily interest and resetting dailyTrade figure
+    async function dailyInterest()
+    {
+        const profileData = await profileModel.find({});
+
+        for(const profile of profileData)
+        {
+            const interest = Math.round(2*Math.floor(profile.bankLevel)*0.01*profile.bank);
+
+            await profileModel.updateOne(
+            {
+                _id: profile._id,
+            }, 
+            {
+                $inc: {coins: interest},
+                $set: {dailyTrade: false},
+            }
+            );
+        }
+
+        console.log("Updated interest");
     }
 
     async function processMarket()
@@ -149,7 +174,7 @@ module.exports = () =>
         return;
     }
 
-    let dailyTimer = new cron.CronJob('00 00 20 * * 0-6', dailyReward); //set up timer
+    let dailyTimer = new cron.CronJob('00 15 17 * * 0-6', dailyReward); //set up timer ('00 00 20 * * 0-6')
     let marketTimer = new cron.CronJob('0 */5 * * * *', processMarket);
     dailyTimer.start();
     marketTimer.start();

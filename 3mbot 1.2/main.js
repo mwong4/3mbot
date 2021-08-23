@@ -6,14 +6,18 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Bank Interest
--Bank Upgrade
+-Bank auto upgrade
+-Market service fee
+-Help search feature
+
+-Visual Iterface
+-cron error
 
 -Items w/ Image Support
--Visual Iterface
 
--Implement ACTUAL item value
 -Implement spreadsheet export
+-Implement ACTUAL item value
+
 -Implement improved purchased product data tracking
 */ 
 

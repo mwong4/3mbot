@@ -16,6 +16,9 @@ const profileSchema = new mongoose.Schema({
     daily: {type: Boolean}, //true when available
     coins: {type: Number, default: 1000},
     bank: {type: Number},
+    bankLevel: {type: Number, default: 1},
+    bankCap: {type: Number, default: 5000},
+    dailyTrade: {type: Boolean, default: false},
     boosterTime: {type: Date, default: 0}, //time before next boost reward
     inventory: {type: [String]}
 })
