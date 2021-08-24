@@ -18,7 +18,12 @@ module.exports =
     description: "To see listings on the market. Syntax: >market  filter(ie: mine, 1, 2, 3, crate, item)",
     async execute(client, message, args, Discord, profileData)
     {
-        const filterWord = args[0]; //Get filter command
+        var filterWord = args[0]; //Get filter command
+
+        if(!args[0]) //If no filter is inputted, set to page 1
+        {
+            filterWord = 1;
+        }
 
         try
         {
