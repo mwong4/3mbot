@@ -11,7 +11,7 @@ module.exports =
     name: 'help',
     aliases: [],
     permissions: [],
-    description: "Shows all commands and their descriptions. Syntax: >help. For admin commands, use Syntax: >help admin",
+    description: "Shows all commands and their descriptions. Syntax: >help. For admin commands, use Syntax: >help admin.",
 
     execute(client, message, args, Discord, profileData)
     {

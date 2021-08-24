@@ -155,6 +155,8 @@ module.exports = () =>
             levelReward = 0.04;  //<------ benefit per day
         }
 
+        const taxedPrice = _cost*0.9;
+
         //Give money to owner, update if traded
         const responseTwo = await profileModel.findOneAndUpdate(
         {
@@ -162,7 +164,7 @@ module.exports = () =>
         }, 
         {
             $inc: {
-                coins: _cost,
+                coins: taxedPrice,
                 bankLevel: levelReward,
             },
             $set: { dailyTrade: true },

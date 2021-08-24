@@ -7,7 +7,6 @@ Follow Tutorials: CodeLyon
 
 TODO
 -Market service fee
--Help search feature
 
 -Visual Iterface
 -cron error

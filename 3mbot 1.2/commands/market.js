@@ -91,7 +91,7 @@ module.exports =
                         winIndicator = "(You are Winning)";
                     }
 
-                    newEmbed.addField(`(${type}) event #${i} (<-- code) ${winIndicator}`, `[${data[i].items}] for ~$${value} (ending at ${data[i].expiryDate})  <Hex: ${data[i]._id}>`, false);
+                    newEmbed.addField(`(${type}) event #${i} (<-- code) ${winIndicator}`, `[${data[i].items}] for ~$${value}(tax included) (ending at ${data[i].expiryDate})  <Hex: ${data[i]._id}>`, false);
                 }
 
                 //Display filter in embed
@@ -209,6 +209,7 @@ module.exports =
                     );
 
                     levelReward = 0;
+                    const taxedPrice = data.startingPrice*0.9;
 
                     //See if person elegible for xp reward
                     if(!sellerData.dailyTrade)
@@ -222,7 +223,7 @@ module.exports =
                     }, 
                     {
                         $inc: {
-                            coins: data.startingPrice,
+                            coins: taxedPrice,
                             bankLevel: levelReward,
                         },
                         $set: { dailyTrade: true },
@@ -420,7 +421,7 @@ module.exports =
                             value = event.latestBid;
                         }
 
-                        newEmbed.addField(`(${type}) event #${counter} (<-- code)`, `${event.items} for ~$${value}  (ending at ${event.expiryDate})`, false);
+                        newEmbed.addField(`(${type}) event #${counter} (<-- code)`, `${event.items} for ~$${value*0.9}(+${value*0.1})  (ending at ${event.expiryDate})`, false);
                         counter ++; //increase counter
                     }
                     

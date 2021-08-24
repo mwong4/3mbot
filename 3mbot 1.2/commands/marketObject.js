@@ -15,7 +15,7 @@ module.exports =
     name: 'marketObject',
     aliases: ["marketobject", "marketobj", "mobj"],
     permissions: [],
-    description: "To sell/auction an item. Syntax: >marketObject startingPrice  timeSelling(Max 14 days, in **hours**)  auction?(true, false)  items(in a list, seprated by 1 space)",
+    description: "To sell/auction an item. Syntax: >marketObject startingPrice(including 10% tax)  timeSelling(Max 14 days, in **hours**)  auction?(true, false)  items(in a list, seprated by 1 space)",
     async execute(client, message, args, Discord, profileData)
     {
         if(args.length < 4) return message.channel.send("ERROR: Missing arguments"); //Make sure enough arguments provided
