@@ -4,6 +4,8 @@ Date Created: Aug 18, 2021
 Purpose: To see the listings of events on the market
 */
 
+require('dotenv').config(); //Requiring .env file
+
 const marketModel = require('../models/marketSchema'); //get model
 const profileModel = require('../models/profileSchema'); //get models
 const itemModel = require('../models/itemSchema');
@@ -167,9 +169,20 @@ module.exports =
                     const personalData = await profileModel.findOne({userID: message.author.id});
                     if(personalData.coins < data.startingPrice) return message.channel.send(`ERROR: You do not have enough money ($${data.startingPrice})`);
 
+                    //get seller data
+                    const sellerData = await profileModel.findOne({userID: data.sellerID});
+
                     //Check expiry
                     const todayDate = new Date();
                     if(data.expiryDate.getTime() < todayDate.getTime()) return message.channel.send("ERROR: Item sale has expired");
+
+                    var levelReward = 0;
+
+                    //See if person elegible for xp reward
+                    if(!personalData.dailyTrade)
+                    {
+                        levelReward = 0.04;  //<------ benefit per day
+                    }
 
                     //Perform transaction
                     const responseOne = await profileModel.findOneAndUpdate( //remove money from person and give items
@@ -177,14 +190,24 @@ module.exports =
                         userID: message.author.id,
                     }, 
                     {
-                        $inc: {
+                        $inc: { 
                             coins: -data.startingPrice,
+                            bankLevel: levelReward,
                         },
                         $push: {
                             inventory: { $each: data.items },
                         },
+                        $set: { dailyTrade: true },
                     }
                     );
+
+                    levelReward = 0;
+
+                    //See if person elegible for xp reward
+                    if(!sellerData.dailyTrade)
+                    {
+                        levelReward = 0.04;  //<------ benefit per day
+                    }
 
                     const responseTwo = await profileModel.findOneAndUpdate( //give money to owner
                     {
@@ -193,7 +216,9 @@ module.exports =
                     {
                         $inc: {
                             coins: data.startingPrice,
+                            bankLevel: levelReward,
                         },
+                        $set: { dailyTrade: true },
                     }
                     );
 

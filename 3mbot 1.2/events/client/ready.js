@@ -7,6 +7,8 @@ Follow Tutorials: CodeLyon
 */
 
 const cron = require('cron'); //Import date/time reader package
+require('dotenv').config(); //Requiring .env file
+
 const profileModel = require('../../models/profileSchema'); //get models
 const marketModel = require('../../models/marketSchema');
 const itemModel = require('../../models/itemSchema');
@@ -120,7 +122,18 @@ module.exports = () =>
     //To give money and items to owner and bidder
     async function updateAuction(_items, _cost, _sellerID, _bidderID)
     {
-        //Give items to bidder
+        const bidderData = await profileModel.findOne({uerID: _sellerID});
+        const sellerData = await profileModel.findOne({userID: _bidderID});
+
+        var levelReward = 0;
+
+        //See if person elegible for xp reward
+        if(!bidderData.dailyTrade)
+        {
+            levelReward = 0.04;  //<------ benefit per day
+        }
+
+        //Give items to bidder, update if traded
         const responseOne = await profileModel.findOneAndUpdate(
         {
             userID: _bidderID,
@@ -129,10 +142,20 @@ module.exports = () =>
             $push: {
                 inventory: { $each: _items },
             },
+            $inc: { bankLevel: levelReward },
+            $set: { dailyTrade: true },
         }
         );
 
-        //Give money to owner
+        levelReward = 0;
+
+        //See if person elegible for xp reward
+        if(!bidderData.dailyTrade)
+        {
+            levelReward = 0.04;  //<------ benefit per day
+        }
+
+        //Give money to owner, update if traded
         const responseTwo = await profileModel.findOneAndUpdate(
         {
             userID: _sellerID,
@@ -140,7 +163,9 @@ module.exports = () =>
         {
             $inc: {
                 coins: _cost,
+                bankLevel: levelReward,
             },
+            $set: { dailyTrade: true },
         }
         );
 

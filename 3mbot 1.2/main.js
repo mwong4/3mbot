@@ -6,7 +6,6 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
--Bank auto upgrade
 -Market service fee
 -Help search feature
 
