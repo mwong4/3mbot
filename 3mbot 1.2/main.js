@@ -6,7 +6,9 @@ Purpose: Main file of 3mbot
 Follow Tutorials: CodeLyon
 
 TODO
+-Market command (0)
 -Market service fee
+
 -Help search feature
 
 -Visual Iterface

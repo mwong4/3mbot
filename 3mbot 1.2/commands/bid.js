@@ -26,6 +26,8 @@ module.exports =
             //Make sure it is an auction
             if(!data.auction) return message.channel.send("ERROR: Event is not an auction");
 
+            if(data.sellerID == message.author.id) return message.channel.send("ERROR: Cannot bid with yourself");
+
             //Calculate new value
             var cost;
             if(data.latestBid === 0) cost = data.startingPrice;

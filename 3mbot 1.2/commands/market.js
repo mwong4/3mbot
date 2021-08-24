@@ -122,6 +122,8 @@ module.exports =
                             }
                             else //otherwise use sell function
                             {
+                                if(data[segments[1]].sellerID == message.author.id) return message.channel.send("ERROR: Cannot sell with yourself");
+
                                 //Get confirmation
                                 let filter = m => m.author.id === message.author.id
                                 message.channel.send(`Paying ${data[segments[1]].startingPrice} for [${data[segments[1]].items}], please reply with <YES> to purchase. This message will expire in 30 seconds`).then(() => {
@@ -256,6 +258,8 @@ module.exports =
                 async function doubleCheckBid(_objId)
                 {
                     const dataDoubleCheck = await marketModel.findOne({_id: _objId}); //Get up to date data
+
+                    if(dataDoubleCheck.sellerID == message.author.id) return message.channel.send("ERROR: Cannot bid with yourself");
                     
                     //Calculate new value
                     var cost;

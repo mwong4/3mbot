@@ -22,7 +22,7 @@ module.exports =
         const newEmbed = new Discord.MessageEmbed() //make embed
             .setTitle(`${message.author.username}'s Account`)
             .setColor('#2AD500')
-            .setDescription("Tip: Put money in bank to earn interest (extra money). Trade on the market to upgrade your interest plans")
+            .setDescription("Tip: Put money in bank to earn interest (extra money). Trade on the market **daily** to upgrade your interest plans")
             .addFields(
                 {name: 'Wallet', value: `$${profileData.coins}`},
                 {name: 'Bank', value: `$${profileData.bank} @ ${Math.floor(profileData.bankLevel)*2}% Interest [LEVEL ${Math.floor(profileData.bankLevel)}] (~${Math.round((profileData.bankLevel % 1)*100)}% TO LVL ${Math.floor(profileData.bankLevel) + 1})`}
