@@ -63,4 +63,10 @@ mongoose.connect(process.env.MONGODB_SRV, {
     console.log(err); //let us know error
 });
 
+client.on('clickButton', async(button) => {
+    button.channel.send("Recieved");
+    
+    await button.reply.defer();
+});
+
 client.login(process.env.DISCORD_TOKEN); //Login token

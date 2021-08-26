@@ -6,6 +6,7 @@ Purpose: ping test command
 Follow Tutorials: CodeLyon
 */
 
+const { MessageButton } = require('discord-buttons');
 module.exports = 
 {
     name: 'pingtest',
@@ -21,40 +22,18 @@ module.exports =
 
         //message.channel.send(args.splice(0, args.length).join(" ")); //Send 'ping' in channel
 
-        /*
+        const button1 = new MessageButton()
+            .setStyle('green')
+            .setLabel('YES')
+            .setID('button1');
 
-        const disbut = require("discord-buttons");
+        const button2 = new MessageButton()
+            .setStyle('red')
+            .setLabel('NO')
+            .setID('button2');
 
-        let yesButton = new disbut.MessageButton()
-        .setLabel("YES")
-        .setID("id1")
-        .setStyle("green");
-
-        let noButton = new disbut.MessageButton()
-        .setLabel("NO")
-        .setID("id2")
-        .setStyle("red");
-
-        let row = new disbut.MessageActionRow()
-        .addComponents(yesButton, noButton);
-
-        message.channel.send("Message", row);
-
-        client.on('clickButton', async (yesButton) => {
-            message.channel.send("YES");
-            noButton.disabled();
-            yesButton.disabled();
+        message.channel.send('Click this button to get a response!', {
+            buttons: [button1, button2],
         });
-
-
-        client.on('clickButton', async (noButton) => {
-            message.channel.send("NO");
-            noButton.disabled();
-            yesButton.disabled();
-        });
-        */
-
-        
-
     },
 };
