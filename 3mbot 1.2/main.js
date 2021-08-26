@@ -5,6 +5,7 @@ Purpose: Main file of 3mbot
 
 Follow Tutorials: CodeLyon
 Discord-buttons: https://discord-buttons.js.org/docs/stable/#welcome
+Button tutorial: https://www.youtube.com/watch?v=09AyvuAW-wU
 
 TODO
 -Confirmation -> Buttons
@@ -61,12 +62,6 @@ mongoose.connect(process.env.MONGODB_SRV, {
     console.log('3mbot Database Connected'); //let us know connection
 }).catch((err) => {
     console.log(err); //let us know error
-});
-
-client.on('clickButton', async(button) => {
-    button.channel.send("Recieved");
-    
-    await button.reply.defer();
 });
 
 client.login(process.env.DISCORD_TOKEN); //Login token
