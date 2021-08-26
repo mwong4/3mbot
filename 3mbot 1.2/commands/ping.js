@@ -25,15 +25,18 @@ module.exports =
 
         //message.channel.send(args.splice(0, args.length).join(" ")); //Send 'ping' in channel
 
+        const code1 = (Math.random()).toString();
+        const code2 = (Math.random()).toString();
+
         const button1 = new MessageButton() //Yes button
             .setStyle('green')
             .setLabel('YES')
-            .setID('yes');
+            .setID(code1);
 
         const button2 = new MessageButton() //No button
             .setStyle('red')
             .setLabel('NO')
-            .setID('no');
+            .setID(code2);
 
         
         //Send buttons out
@@ -45,7 +48,7 @@ module.exports =
         client.on('clickButton', async(button) => {
             if(message.author.id === button.clicker.id) //Respond only to target
             {
-                if(button.id === "yes")
+                if(button.id === code1)
                 {
                     console.log("YES input");
                 }
@@ -60,6 +63,10 @@ module.exports =
                 button.channel.send(`Input Recieved: ${response}`); //Send output/response
     
                 await button.reply.defer();
+            }
+            else
+            {
+                return;
             }
         });
     },
