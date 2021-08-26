@@ -21,21 +21,40 @@ module.exports =
 
         //message.channel.send(args.splice(0, args.length).join(" ")); //Send 'ping' in channel
 
-        var input = 10;
-        var input2 = 0;
+        /*
 
-        if(test(input2))
-        {
-            console.log("yes");
-        }
-        else
-        {
-            console.log("no");
-        }
+        const disbut = require("discord-buttons");
+
+        let yesButton = new disbut.MessageButton()
+        .setLabel("YES")
+        .setID("id1")
+        .setStyle("green");
+
+        let noButton = new disbut.MessageButton()
+        .setLabel("NO")
+        .setID("id2")
+        .setStyle("red");
+
+        let row = new disbut.MessageActionRow()
+        .addComponents(yesButton, noButton);
+
+        message.channel.send("Message", row);
+
+        client.on('clickButton', async (yesButton) => {
+            message.channel.send("YES");
+            noButton.disabled();
+            yesButton.disabled();
+        });
+
+
+        client.on('clickButton', async (noButton) => {
+            message.channel.send("NO");
+            noButton.disabled();
+            yesButton.disabled();
+        });
+        */
+
+        
+
     },
 };
-
-function test(_input)
-{
-    return _input;
-}

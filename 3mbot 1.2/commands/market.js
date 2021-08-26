@@ -114,6 +114,7 @@ module.exports =
                         } 
                         else 
                         {
+                            if(!segments[1]) return message.channel.send("Terminated: code not specified"); //Make sure there is an input
                             if(isNaN(segments[1])) return message.channel.send("Terminated: Code is not a number"); //Make sure input is number
                             if(Number(segments[1]) % 1 != 0 || Number(segments[1]) < 0) return message.channel.send("Terminated: Bid code is not a positive whole number");
                             if(Number(segments[1]) >= data.length) return message.channel.send(`Terminated: Code does not exist`);
