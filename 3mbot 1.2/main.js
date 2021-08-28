@@ -26,7 +26,7 @@ require('dotenv').config(); //Requiring .env file
 
 const mongoose = require("mongoose");
 
-const client = new Discord.Client();
+const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"]});
 
 client.commands = new Discord.Collection(); //command and event collections
 client.events = new Discord.Collection();
