@@ -4,37 +4,29 @@ Date Created: July 17, 2021
 Purpose: Main file of 3mbot
 
 Follow Tutorials: CodeLyon
-Discord-buttons: https://discord-buttons.js.org/docs/stable/#welcome
-Button tutorial: https://www.youtube.com/watch?v=09AyvuAW-wU
 
 TODO
--Confirmation -> Buttons
--Buy
+-Market service fee
+-Help search feature
 
--Cancel
--Inventory/Inspect/Use
--Sell
--Trade
-
+-Visual Iterface
+-cron error
 
 -Items w/ Image Support
 
 -Implement spreadsheet export
 -Implement ACTUAL item value
--cron error (Could not find)
 
 -Implement improved purchased product data tracking
 */ 
 
-//Essentiel Packages
 const fs = require('fs'); //Allow to acces other js files
 const Discord = require('discord.js');
-const client = new Discord.Client();
+require('dotenv').config(); //Requiring .env file
+
 const mongoose = require("mongoose");
 
-//Other packages
-require('dotenv').config(); //Requiring .env file
-require('discord-buttons')(client);
+const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"]});
 
 client.commands = new Discord.Collection(); //command and event collections
 client.events = new Discord.Collection();
