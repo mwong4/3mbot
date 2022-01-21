@@ -27,7 +27,7 @@ app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 
 //Mongo URI
-const mongoURI = 'mongodb+srv://Iamwaxy:U8wNC6KnqHnpgbev@3mbotc1.hnp3c.mongodb.net/3mbotDB?retryWrites=true&w=majority'; //Potential problem
+const mongoURI = 'null'; //Potential problem
 
 //create mongodb connection
 const conn = mongoose.createConnection(mongoURI);
